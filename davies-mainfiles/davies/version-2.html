@@ -116,7 +116,7 @@
             <div class="container">
                 <div class="content-wrap d-flex justify-content-start align-items-center" style="min-height: 90vh;">
                     <h2 class="text-display-2 letter-space--3 text-start effectFade fadeUp"
-                        style="font-size: 8.5vw; line-height: 1.1;">
+                        style="font-size: clamp(24px, 8vw, 110px); line-height: 1.1; word-break: break-word;">
                         Solving Business Communication <br> with Visuals.
                     </h2>
                 </div>
@@ -153,10 +153,12 @@
             <div class="container">
                 <div class="work-list stack-element-main position-relative">
                     <div class="element">
-                        <a href="#" class="wg-work effectFade fadeUp no-div">
+                        <a href="#" class="wg-work effectFade fadeUp no-div"
+                            onclick="event.preventDefault(); var v = this.querySelector('video'); if(v) v.paused ? v.play() : v.pause();">
                             <div class="work-image">
-                                <video class="" muted="" autoplay="" loop="" playsinline="">
-                                    <source src="assets/images/video/nexbot.mp4" type="video/mp4">
+                                <video class="click-play-video" width="1296" height="648" muted loop playsinline
+                                    preload="metadata" style="object-fit: cover; ">
+                                    <source src="assets/video/Nopo%20Amp%202.mp4" type="video/mp4">
                                 </video>
                             </div>
                             <div class="work-content">
@@ -181,10 +183,13 @@
                         </a>
                     </div>
                     <div class="element">
-                        <a href="#" class="wg-work">
+                        <a href="#" class="wg-work"
+                            onclick="event.preventDefault(); var v = this.querySelector('video'); if(v) v.paused ? v.play() : v.pause();">
                             <div class="work-image">
-                                <img loading="lazy" width="1296" height="648" src="assets/images/section/work-5.jpg"
-                                    alt="Image">
+                                <video class="click-play-video" width="1296" height="648" muted loop playsinline
+                                    preload="metadata" style="object-fit: cover; ">
+                                    <source src="assets/video/Infosys.mp4" type="video/mp4">
+                                </video>
                             </div>
                             <div class="work-content">
                                 <div class="work_top">
@@ -210,10 +215,13 @@
                         </a>
                     </div>
                     <div class="element">
-                        <a href="#" class="wg-work">
+                        <a href="#" class="wg-work"
+                            onclick="event.preventDefault(); var v = this.querySelector('video'); if(v) v.paused ? v.play() : v.pause();">
                             <div class="work-image">
-                                <img loading="lazy" width="1296" height="648" src="assets/images/section/work-6.jpg"
-                                    alt="Image">
+                                <video class="click-play-video" width="1296" height="648" muted loop playsinline
+                                    preload="metadata" style="object-fit: cover; ">
+                                    <source src="assets/video/Honeywell%20ReEngineer.AI.mp4" type="video/mp4">
+                                </video>
                             </div>
                             <div class="work-content">
                                 <div class="work_top">
@@ -262,7 +270,8 @@
                         </div>
                     </div>
                     <div class="content">
-                        <div class="top text-display-1 fw-semibold letter-space--3">
+                        <div class="top text-display-1 fw-semibold letter-space--3"
+                            style="font-size: clamp(60px, 10vw, 180px); line-height: 1;">
                             <p class="effectFade fadeUp">About</p>
                             <p class="effectFade fadeUp" data-delay="0.1">Jcru Studio<span class="text-primary">_</span>
                             </p>
@@ -414,11 +423,20 @@
         <!-- Brand -->
         <div class="section-brand flat-spacing bg-surface">
             <div class="container-fluid p-0">
-                <h6 class="mini-title text-caption text-black-64">
+                <h6 class="mini-title text-body-1 text-black-64 mb-20 text-center">
                     BRANDS AND PARTNERS
                 </h6>
-                <div class="brand-list-strip overflow-hidden w-100" style="margin:0; width:100%;">
-                    <div class="infiniteSlide" data-style="left" data-speed="30" data-clone="10">
+                <div class="brand-list-strip overflow-hidden w-100 d-flex"
+                    style="margin:0; width:100%; flex-wrap: nowrap;">
+                    <div class="marquee-wrapper" style="animation-duration: 60s; flex-shrink: 0; width: max-content;">
+                        <img loading="lazy" src="assets/images/brand/logo-strip.png" alt="Brand Strip"
+                            style="max-height: 120px; border: none; display: inline-block;">
+                        <img loading="lazy" src="assets/images/brand/logo-strip.png" alt="Brand Strip"
+                            style="max-height: 120px; border: none; display: inline-block;">
+                        <img loading="lazy" src="assets/images/brand/logo-strip.png" alt="Brand Strip"
+                            style="max-height: 120px; border: none; display: inline-block;">
+                    </div>
+                    <div class="marquee-wrapper" style="animation-duration: 60s; flex-shrink: 0; width: max-content;">
                         <img loading="lazy" src="assets/images/brand/logo-strip.png" alt="Brand Strip"
                             style="max-height: 120px; border: none; display: inline-block;">
                         <img loading="lazy" src="assets/images/brand/logo-strip.png" alt="Brand Strip"
