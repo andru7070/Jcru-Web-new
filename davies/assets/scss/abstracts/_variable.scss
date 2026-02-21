@@ -1,13 +1,12 @@
-$font-main: "Figtree",
-    sans-serif;
+$font-main: Helvetica, Arial, sans-serif;
 $fontIcon: "icomoon";
 
 :root {
     // color
     --white: #ffffff;
     --black: #000000;
-    --primary: #07C42C;
-    --primary-rgb: 7, 196, 44;
+    --primary: #1a27c9;
+    --primary-rgb: 26, 39, 201;
     --white-50: #FFFFFF80;
     --white-64: #FFFFFFA3;
     --white-32: #ffffff52;
@@ -25,7 +24,7 @@ $fontIcon: "icomoon";
 }
 
 [data-color-primary="color-primary-1"] {
-    --primary: #07C42C;
+    --primary: #1a27c9;
 }
 
 [data-color-primary="color-primary-2"] {
