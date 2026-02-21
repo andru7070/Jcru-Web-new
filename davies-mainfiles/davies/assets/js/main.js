@@ -281,6 +281,25 @@
         });
     };
 
+    /* Hover Video Cards
+    -------------------------------------------------------------------------*/
+    var hoverVideoCards = function () {
+        $(".hover-video-card").each(function () {
+            var $card = $(this);
+            var $video = $card.find("video").get(0);
+
+            if ($video) {
+                $card.on("mouseenter", function () {
+                    $video.play();
+                });
+
+                $card.on("mouseleave", function () {
+                    $video.pause();
+                });
+            }
+        });
+    };
+
     // Dom Ready
     $(function () {
         infiniteSlide();
@@ -293,5 +312,6 @@
         clickActive();
         headerSticky();
         decodeTextEffect();
+        hoverVideoCards();
     });
 })(jQuery);
