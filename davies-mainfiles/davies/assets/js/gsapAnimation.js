@@ -117,17 +117,28 @@
                 elements.forEach((element, index) => {
                     const elementHeight = element.offsetHeight;
 
+                    // Use a timeline to ensure it fades to 0 opacity exactly when the next card covers it
+                    const totalDuration = containerHeight - elementHeight;
+                    const fadeRatio = totalDuration > 0 ? (elementHeight / totalDuration) : 1;
+
+                    const tl = gsap.timeline();
+                    tl.to(element, {
+                        scale: 0.95,
+                        opacity: 0,
+                        duration: fadeRatio
+                    });
+                    if (fadeRatio < 1) {
+                        tl.to({}, { duration: 1 - fadeRatio }); // Pad the rest of the pin duration
+                    }
+
                     const pinTrigger = ScrollTrigger.create({
                         trigger: element,
                         scrub: 1,
                         start: "top top+=30",
-                        end: `+=${containerHeight - elementHeight}`,
+                        end: `+=${totalDuration}`,
                         pin: true,
                         pinSpacing: false,
-                        animation: gsap.to(element, {
-                            scale: 0.9,
-                            opacity: 0,
-                        }),
+                        animation: tl,
                     });
 
                     scrollTriggerInstances.push(pinTrigger);
