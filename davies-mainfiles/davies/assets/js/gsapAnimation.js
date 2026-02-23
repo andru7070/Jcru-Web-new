@@ -303,16 +303,16 @@
                     var randomWidth = Math.floor(Math.random() * 101);
                     gsap.to(innerBars[i + increment], {
                         width: randomWidth + "%",
-                        duration: 0.3,
+                        duration: 0.15,
                         ease: "none",
                     });
                 }
 
-                gsap.delayedCall(0.3, function () {
+                gsap.delayedCall(0.15, function () {
                     for (var i = 0; i < 2; i++) {
                         gsap.to(innerBars[i + increment], {
                             width: "100%",
-                            duration: 0.3,
+                            duration: 0.15,
                             ease: "none",
                         });
                     }
@@ -329,18 +329,34 @@
                             },
                         });
 
-                        preloaderTL.to(".preloader", {
-                            "--preloader-clip": "100%",
-                            duration: 0.3,
+                        preloaderTL.to(".site-name", {
+                            opacity: 0,
+                            duration: 0.15,
                             ease: "none",
                         });
+
+                        preloaderTL.to(".preloader", {
+                            "--preloader-clip": "100%",
+                            duration: 0.15,
+                            ease: "none",
+                        }, "<");
                     }
                 });
             }
 
-            $(window).on("load", function () {
+            var isAnimatingBars = false;
+            function startBars() {
+                if (isAnimatingBars) return;
+                isAnimatingBars = true;
                 animateBars();
-            });
+            }
+
+            if (document.readyState === "complete") {
+                startBars();
+            } else {
+                $(window).on("load", startBars);
+                setTimeout(startBars, 3000);
+            }
         } else {
             runAnimations();
         }
@@ -678,6 +694,37 @@
         $(window).on("resize", debounce(checkAndInit, 300));
     };
 
+    var scrollBatchFade = () => {
+        if ($(".filter-grid-item").length) {
+            gsap.registerPlugin(ScrollTrigger);
+
+            // Initial state for grid items
+            gsap.set(".filter-grid-item", {
+                autoAlpha: 0,
+                y: 60
+            });
+
+            ScrollTrigger.batch(".filter-grid-item", {
+                onEnter: batch => gsap.to(batch, {
+                    autoAlpha: 1,
+                    y: 0,
+                    stagger: 0.15,
+                    duration: 0.8,
+                    ease: "power3.out",
+                    overwrite: true
+                }),
+                onEnterBack: batch => gsap.to(batch, {
+                    autoAlpha: 1,
+                    y: 0,
+                    stagger: 0.15,
+                    duration: 0.8,
+                    ease: "power3.out",
+                    overwrite: true
+                }),
+            });
+        }
+    };
+
     var runAnimations = () => {
         serviceScroll();
         stackElement();
@@ -685,6 +732,7 @@
         stackElement2();
         gsapA2();
         changetext();
+        scrollBatchFade();
         scrollEffectFade();
         mouseHover();
         animateBox();

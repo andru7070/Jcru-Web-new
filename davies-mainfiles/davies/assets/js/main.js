@@ -300,6 +300,46 @@
         });
     };
 
+    /* Hover YouTube Video Cards
+    -------------------------------------------------------------------------*/
+    var hoverYoutubeCards = function () {
+        $(".filter-grid-item[data-youtube-id]").each(function () {
+            var $card = $(this);
+            var youtubeId = $card.attr("data-youtube-id");
+            var $imageContainer = $card.find(".blog-image");
+            var hoverTimeout;
+
+            if (youtubeId && $imageContainer.length) {
+                // Ensure parent position is relative for absolute positioning of iframe
+                $imageContainer.css("position", "relative");
+
+                $card.on("mouseenter", function () {
+                    // Small delay to prevent loading iframe on quick accidental hovers
+                    hoverTimeout = setTimeout(function () {
+                        if ($imageContainer.find(".hover-yt-iframe").length === 0) {
+                            var iframeHtml = `<iframe class="hover-yt-iframe" src="https://www.youtube.com/embed/${youtubeId}?autoplay=1&mute=1&controls=0&modestbranding=1&loop=1&playlist=${youtubeId}&playsinline=1" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; z-index: 2; pointer-events: none; border-radius: 12px; object-fit: cover;" allow="autoplay; encrypted-media"></iframe>`;
+                            $imageContainer.append(iframeHtml);
+
+                            // Fade in effect
+                            var $iframe = $imageContainer.find(".hover-yt-iframe");
+                            $iframe.css({ opacity: 0, transition: 'opacity 0.4s ease' });
+                            setTimeout(() => { $iframe.css('opacity', 1); }, 50);
+                        }
+                    }, 300);
+                });
+
+                $card.on("mouseleave", function () {
+                    clearTimeout(hoverTimeout);
+                    var $iframe = $imageContainer.find(".hover-yt-iframe");
+                    if ($iframe.length) {
+                        $iframe.css('opacity', 0);
+                        setTimeout(() => { $iframe.remove(); }, 400);
+                    }
+                });
+            }
+        });
+    };
+
     // Dom Ready
     $(function () {
         infiniteSlide();
@@ -313,5 +353,201 @@
         headerSticky();
         decodeTextEffect();
         hoverVideoCards();
+        hoverYoutubeCards();
+        itemFiltering();
+        videoModal();
     });
+
+    /* Category Filtering
+    -------------------------------------------------------------------------*/
+    var itemFiltering = function () {
+        if ($(".filter-bar").length > 0) {
+            $(".filter-item").on("click", function () {
+                var filterValue = $(this).attr("data-filter");
+
+                // Update active state
+                $(".filter-item").removeClass("active");
+                $(this).addClass("active");
+
+                if (filterValue === "all") {
+                    const seenIds = new Set();
+                    const toShow = [];
+                    const toHide = [];
+
+                    $(".filter-grid-item").each(function () {
+                        const id = $(this).attr("data-youtube-id");
+                        if (id) {
+                            if (seenIds.has(id)) {
+                                toHide.push(this);
+                            } else {
+                                seenIds.add(id);
+                                toShow.push(this);
+                            }
+                        } else {
+                            toShow.push(this);
+                        }
+                    });
+
+                    if (toHide.length > 0) {
+                        gsap.to(toHide, {
+                            autoAlpha: 0,
+                            scale: 0.95,
+                            y: 20,
+                            duration: 0.3,
+                            ease: "power2.in",
+                            onComplete: function () {
+                                $(this.targets()).css("display", "none");
+                            }
+                        });
+                    }
+
+                    gsap.to(toShow, {
+                        autoAlpha: 1,
+                        scale: 1,
+                        y: 0,
+                        duration: 0.6,
+                        delay: toHide.length > 0 ? 0.2 : 0,
+                        stagger: {
+                            each: 0.05,
+                            from: "start",
+                            grid: "auto"
+                        },
+                        ease: "power2.out",
+                        onStart: function () {
+                            $(this.targets()).css("display", "block");
+                        }
+                    });
+                } else {
+                    const $toShow = $(`.filter-grid-item[data-category="${filterValue}"]`);
+                    const $toHide = $(`.filter-grid-item:not([data-category="${filterValue}"])`);
+
+                    gsap.to($toHide, {
+                        autoAlpha: 0,
+                        scale: 0.95,
+                        y: 20,
+                        duration: 0.3,
+                        ease: "power2.in",
+                        onComplete: function () {
+                            $(this.targets()).css("display", "none");
+                        }
+                    });
+
+                    gsap.to($toShow, {
+                        autoAlpha: 1,
+                        scale: 1,
+                        y: 0,
+                        duration: 0.6,
+                        delay: 0.2, // Small delay for the hide to start
+                        stagger: 0.05,
+                        ease: "power2.out",
+                        onStart: function () {
+                            $(this.targets()).css("display", "block");
+                        }
+                    });
+                }
+            });
+
+            // Trigger the active filter immediately on load to handle duplicate hiding for the "All" view
+            // Use a slight timeout to ensure DOM and GSAP are fully ready
+            setTimeout(function () {
+                $(".filter-item.active").trigger("click");
+            }, 100);
+        }
+    };
+
+    /* YouTube Video Modal
+    -------------------------------------------------------------------------*/
+    var videoModal = function () {
+        const $modal = $("#videoModal");
+        const $container = $("#videoContainer");
+        const $close = $("#closeModal");
+
+        $(document).on("click", ".article-blog[data-youtube-id]", function () {
+            const youtubeId = $(this).data("youtube-id");
+            if (youtubeId) {
+                const iframeHtml = `<iframe src="https://www.youtube.com/embed/${youtubeId}?autoplay=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`;
+                $container.html(iframeHtml);
+                $modal.addClass("show");
+                $("body").addClass("overflow-hidden");
+            }
+        });
+
+        const closeModal = function () {
+            $modal.removeClass("show");
+            $container.html("");
+            $("body").removeClass("overflow-hidden");
+        };
+
+        $close.on("click", closeModal);
+
+        $modal.on("click", function (e) {
+            if ($(e.target).is($modal)) {
+                closeModal();
+            }
+        });
+
+        $(document).on("keydown", function (e) {
+            if (e.key === "Escape" && $modal.hasClass("show")) {
+                closeModal();
+            }
+        });
+    };
+
+    /* Custom Selected Work YouTube Video Modal
+    -------------------------------------------------------------------------*/
+    var customVideoModal = function () {
+        const $customModal = $("#customVideoModal");
+        const $customContainer = $("#videoIframeContainer");
+        const $customClose = $("#closeVideoModal");
+
+        $(document).on("click", ".js-open-video-modal", function (e) {
+            e.preventDefault();
+            const youtubeUrl = $(this).data("youtube-url");
+
+            if (youtubeUrl) {
+                // Determine if we need to append ?autoplay=1 or &autoplay=1
+                const autoplayParam = youtubeUrl.includes("?") ? "&autoplay=1" : "?autoplay=1";
+                const embedUrl = youtubeUrl + autoplayParam;
+
+                const iframeHtml = `<iframe width="100%" height="100%" src="${embedUrl}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`;
+
+                $customContainer.html(iframeHtml);
+                $customModal.addClass("show");
+                $("body").addClass("overflow-hidden");
+
+                // Pause any background videos while modal is open
+                $("video").each(function () {
+                    $(this).get(0).pause();
+                });
+            }
+        });
+
+        const closeCustomModal = function () {
+            $customModal.removeClass("show");
+            $customContainer.html(""); // Erase iframe to stop playback instantly
+            $("body").removeClass("overflow-hidden");
+        };
+
+        $customClose.on("click", closeCustomModal);
+
+        $customModal.on("click", function (e) {
+            // Close if clicking the overlay, not the content
+            if ($(e.target).is($customModal) || $(e.target).hasClass("video-modal-content")) {
+                closeCustomModal();
+            }
+        });
+
+        $(document).on("keydown", function (e) {
+            if (e.key === "Escape" && $customModal.hasClass("show")) {
+                closeCustomModal();
+            }
+        });
+    };
+
+    // Initialize custom modal (add to Dom Ready if needed, or self-initialize)
+    $(function () {
+        customVideoModal();
+    });
+
+
 })(jQuery);

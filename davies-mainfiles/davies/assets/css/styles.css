@@ -2959,6 +2959,17 @@ header.header-sticky {
   transform: scale(1.1);
 }
 
+/* Premium Hover Scale for all Work Cards */
+.article-blog {
+  transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+  cursor: pointer;
+}
+
+.article-blog:hover {
+  transform: scale(1.03);
+  z-index: 5;
+}
+
 .hover-img .img-style2 {
   overflow: hidden;
   border-radius: 10px;
@@ -8331,4 +8342,123 @@ button.animate-btn::after,
   }
 }
 
+/* Category Filter Bar
+-------------------------------------------------------------------------*/
+/* Responsive Video Wrap (YouTube) */
+.video-container {
+  position: relative;
+  padding-bottom: 56.25%;
+  /* 16:9 Aspect Ratio */
+  height: 0;
+  overflow: hidden;
+  border-radius: 12px;
+  margin-bottom: 20px;
+  background: #000;
+}
+
+.video-container iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.filter-bar {
+  border-bottom: 1px solid var(--white-16);
+  padding-bottom: 20px;
+}
+
+.filter-item {
+  background: transparent;
+  border: 1px solid var(--white-16);
+  color: var(--white-64);
+  padding: 8px 24px;
+  border-radius: 100px;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin: 5px;
+}
+
+.filter-item:hover {
+  border-color: var(--white);
+  color: var(--white);
+}
+
+.filter-item.active {
+  background: var(--white);
+  color: var(--black);
+  border-color: var(--white);
+}
+
+.filter-grid-item {
+  transition: transform 0.4s ease, opacity 0.4s ease;
+}
+
+
+/* Custom YouTube Video Modal */
+.video-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.95);
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.4s ease, visibility 0.4s ease;
+}
+
+.video-modal.show {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.video-modal.show .video-modal-content {
+  transform: scale(1);
+  opacity: 1;
+}
+
+.video-modal-content {
+  width: 90%;
+  max-width: 1100px;
+  position: relative;
+  aspect-ratio: 16/9;
+  transform: scale(0.7);
+  opacity: 0;
+  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.4s ease;
+}
+
+.video-modal-close {
+  position: absolute;
+  top: -50px;
+  right: 0;
+  color: #fff;
+  font-size: 32px;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.video-modal-close:hover {
+  color: var(--primary);
+}
+
+.video-modal iframe {
+  width: 100%;
+  height: 100%;
+  border-radius: 12px;
+  box-shadow: 0 0 50px rgba(27, 14, 231, 0.3);
+}
+
+/*# sourceMappingURL=styles.css.map */
 /*# sourceMappingURL=styles.css.map */
