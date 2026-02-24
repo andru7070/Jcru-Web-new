@@ -322,6 +322,7 @@
             </div>
         </section>
         <!-- About Me -->
+
         <!-- Tech Stack -->
         <section class="section-tech-stack-v2 flat-spacing">
             <div class="container">
@@ -489,7 +490,7 @@
         </section>
         <!-- /Award -->
         <!-- Brand -->
-        <div class="section-brand flat-spacing bg-white">
+        <div class="section-brand flat-spacing bg-white" style="padding-bottom: 50px !important;">
             <div class="container-fluid p-0">
                 <div class="container pb-20">
                     <h6 class="mini-title text-body-1 text-black-64 text-start">
@@ -524,6 +525,167 @@
             </div>
         </div>
         <!-- /Brand -->
+        <!-- Client Testimonials -->
+        <section class="section-testimonial-v2 flat-spacing bg-white text-black" style="padding-top: 0px !important;">
+            <div class="container">
+                <div class="s-header d-block">
+                    <h2 class="text-display-2 letter-space--3 text-center effectFade fadeUp text-black">
+                        <span style="font-size: 50%;">What our clients says about us</span>
+                    </h2>
+                </div>
+                <style>
+                    .section-testimonial-v2 {
+                        position: relative;
+                        overflow: hidden;
+                    }
+
+                    .section-testimonial-v2::before {
+                        content: '\201C';
+                        position: absolute;
+                        top: 60%;
+                        left: 15%;
+                        transform: translate(-50%, -50%);
+                        font-size: 800px;
+                        color: #0015ff;
+                        opacity: 1;
+                        z-index: 0;
+                        line-height: 1;
+                        pointer-events: none;
+                        font-family: Arial, Helvetica, sans-serif;
+                        user-select: none;
+                    }
+
+                    .section-testimonial-v2 .container {
+                        position: relative;
+                        z-index: 1;
+                    }
+
+                    .swiper-testimonial .swiper-slide {
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                    }
+
+                    .swiper-testimonial.tf-swiper {
+                        padding-bottom: 50px;
+                        position: relative;
+                    }
+
+                    .swiper-testimonial .swiper-button-next,
+                    .swiper-testimonial .swiper-button-prev {
+                        color: #007bff;
+                    }
+
+                    .swiper-testimonial .swiper-button-next::after,
+                    .swiper-testimonial .swiper-button-prev::after {
+                        font-size: 24px;
+                    }
+
+                    .swiper-testimonial .testimonial-v01 {
+                        transition: transform 0.4s ease, box-shadow 0.4s ease;
+                    }
+
+                    .swiper-testimonial .testimonial-v01:hover {
+                        transform: scale(1);
+                        box-shadow: 0 0 15px rgba(0, 123, 255, 0.4), inset 0 0 40px rgba(0, 123, 255, 0.6) !important;
+                    }
+                </style>
+                <div class="container tf-btn-swiper-main" style="padding-bottom: 40px;">
+                    <div dir="ltr" class="swiper tf-swiper swiper-testimonial" data-preview="1" data-tablet="1"
+                        data-mobile="1" data-space="30" data-loop="true" data-auto="true" data-delay="5000"
+                        data-speed="1000" data-center="true">
+                        <div class="swiper-wrapper">
+                            <!-- Testimonial Item 1 -->
+                            <div class="swiper-slide">
+                                <div class="testimonial-v01 mx-auto"
+                                    style="border-color: #007bff; box-shadow: 0 0 15px rgba(0, 123, 255, 0.4); padding: 50px; border-radius: 12px; max-width: 800px; width: 100%;">
+                                    <div class="tes-text" style="text-align: left; margin-bottom: 30px;">
+                                        <p class="text-black-64 text-body-1" style="font-size: 18px; line-height: 1.6;">
+                                            "From an employee with big dreams to a rock-solid production partner, Joseph
+                                            has grown into someone we trust completely. He delivers on time, on brief,
+                                            every time and is the first name we rely
+                                            on when things get hectic and we need to outsource. An absolute pleasure to
+                                            work with him and his team."</p>
+                                    </div>
+                                    <div class="tes-author" style="text-align: left;">
+                                        <div class="author_info">
+                                            <h6 class="name text-black mb-0">Hiten Goel</h6>
+                                            <p class="designation text-black-64 mb-0" style="font-size: 15px;">
+                                                Co-Founder, Moved Production</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Testimonial Item 2 -->
+                            <div class="swiper-slide">
+                                <div class="testimonial-v01 mx-auto"
+                                    style="border-color: #007bff; box-shadow: 0 0 15px rgba(0, 123, 255, 0.4); padding: 50px; border-radius: 12px; max-width: 800px; width: 100%;">
+                                    <div class="tes-text" style="text-align: left; margin-bottom: 30px;">
+                                        <p class="text-black-64 text-body-1" style="font-size: 18px; line-height: 1.6;">
+                                            "Whenever I have something incredible to deliver, I come to Joseph and team.
+                                            From quality, timelines, taking lead and responsibility to delivering
+                                            enthralling video outputs,
+                                            they always deliver with a smiling face! Highly recommend working with this
+                                            talented team."</p>
+                                    </div>
+                                    <div class="tes-author" style="text-align: left;">
+                                        <div class="author_info">
+                                            <h6 class="name text-black mb-0">Sujan Sarathi</h6>
+                                            <p class="designation text-black-64 mb-0" style="font-size: 15px;">
+                                                Founder,Creative Director, Masterswork</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Testimonial Item 3 -->
+                            <div class="swiper-slide">
+                                <div class="testimonial-v01 mx-auto"
+                                    style="border-color: #007bff; box-shadow: 0 0 15px rgba(0, 123, 255, 0.4); padding: 50px; border-radius: 12px; max-width: 800px; width: 100%;">
+                                    <div class="tes-text" style="text-align: left; margin-bottom: 30px;">
+                                        <p class="text-black-64 text-body-1" style="font-size: 18px; line-height: 1.6;">
+                                            "Their attention to detail and creative storytelling brought our event to
+                                            life on screen. Highly recommended for any brand seeking quality."</p>
+                                    </div>
+                                    <div class="tes-author" style="text-align: left;">
+                                        <div class="author_info">
+                                            <h6 class="name text-black mb-0">Amal K Benny</h6>
+                                            <p class="designation text-black-64 mb-0" style="font-size: 15px;">
+                                                Founder, Vox Events</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Testimonial Item 4 -->
+                            <div class="swiper-slide">
+                                <div class="testimonial-v01 mx-auto"
+                                    style="border-color: #007bff; box-shadow: 0 0 15px rgba(0, 123, 255, 0.4); padding: 50px; border-radius: 12px; max-width: 800px; width: 100%;">
+                                    <div class="tes-text" style="text-align: left; margin-bottom: 30px;">
+                                        <p class="text-black-64 text-body-1" style="font-size: 18px; line-height: 1.6;">
+                                            "Fast turnaround times without compromising on quality. The execution was
+                                            flawless, and the entire process was remarkably smooth."</p>
+                                    </div>
+                                    <div class="tes-author" style="text-align: left;">
+                                        <div class="author_info">
+                                            <h6 class="name text-black mb-0">Arun David</h6>
+                                            <p class="designation text-black-64 mb-0" style="font-size: 15px;">
+                                                Client Relations, Infosys</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Navigation Arrows -->
+                        <div class="swiper-button-next nav-next-swiper"></div>
+                        <div class="swiper-button-prev nav-prev-swiper"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- /Client Testimonials -->
         <!-- CTA -->
         <section class="section-cta flat-spacing" id="contactScroll">
             <div class="s-header d-block">
