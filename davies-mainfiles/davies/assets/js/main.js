@@ -289,13 +289,28 @@
             var $video = $card.find("video").get(0);
 
             if ($video) {
-                $card.on("mouseenter", function () {
-                    $video.play();
-                });
+                // Force first frame to show on load
+                $video.currentTime = 0.01;
 
-                $card.on("mouseleave", function () {
-                    $video.pause();
-                });
+                var isMobileOrTablet = window.innerWidth <= 991 || ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
+
+                if (isMobileOrTablet) {
+                    // Autoplay on mobile/tablet view
+                    $video.play().catch(function (err) {
+                        console.log("Video autoplay failed:", err);
+                    });
+                } else {
+                    // Play on hover for desktop view
+                    $card.on("mouseenter", function () {
+                        $video.play().catch(function (err) {
+                            console.log("Video hover play failed:", err);
+                        });
+                    });
+
+                    $card.on("mouseleave", function () {
+                        $video.pause();
+                    });
+                }
             }
         });
     };
