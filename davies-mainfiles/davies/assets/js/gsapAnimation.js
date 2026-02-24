@@ -747,6 +747,13 @@
         scrollEffectFade();
         mouseHover();
         animateBox();
+
+        setTimeout(() => {
+            const heroVideo = document.getElementById("hero-video");
+            if (heroVideo) {
+                heroVideo.play().catch(e => console.log("Video play failed:", e));
+            }
+        }, 500);
     };
 
     $(function () {
