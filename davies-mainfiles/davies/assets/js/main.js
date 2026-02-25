@@ -240,6 +240,48 @@
         });
     };
 
+    /* Header Color Dynamic
+    -------------------------------------------------------------------------*/
+    var headerColorDynamic = function () {
+        var $header = $(".tf-header");
+        var $whiteSections = $(".bg-white");
+        var $logo = $header.find(".logo-site img");
+        var whiteLogo = "assets/images/logo/jcru-logo.png";
+        var blueLogo = "assets/images/logo/jcru-blue.png";
+
+        if ($whiteSections.length > 0) {
+            $(window).on("scroll", function () {
+                var scrollTop = $(window).scrollTop();
+                var headerHeight = $header.outerHeight();
+                var headerCenter = scrollTop + (headerHeight / 2);
+                var isOnWhite = false;
+
+                $whiteSections.each(function () {
+                    var $section = $(this);
+                    var sectionTop = $section.offset().top;
+                    var sectionBottom = sectionTop + $section.outerHeight();
+
+                    if (headerCenter >= sectionTop && headerCenter <= sectionBottom) {
+                        isOnWhite = true;
+                        return false; // Break loop
+                    }
+                });
+
+                if (isOnWhite) {
+                    $header.addClass("is-on-white");
+                    if ($logo.attr("src") !== blueLogo) {
+                        $logo.attr("src", blueLogo);
+                    }
+                } else {
+                    $header.removeClass("is-on-white");
+                    if ($logo.attr("src") !== whiteLogo) {
+                        $logo.attr("src", whiteLogo);
+                    }
+                }
+            });
+        }
+    };
+
     /* Decode Text Effect
     -------------------------------------------------------------------------*/
     var decodeTextEffect = function () {
@@ -366,6 +408,7 @@
         openMbMenu();
         clickActive();
         headerSticky();
+        headerColorDynamic();
         decodeTextEffect();
         hoverVideoCards();
         hoverYoutubeCards();

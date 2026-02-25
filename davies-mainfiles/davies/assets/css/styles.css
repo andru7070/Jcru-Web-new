@@ -1581,6 +1581,21 @@ header.header-sticky {
   box-shadow: 0 0 10px rgba(255, 255, 255, 0.15);
 }
 
+header.is-on-white .link,
+header.is-on-white .btn-mobile-menu,
+header.is-on-white i {
+  color: var(--primary) !important;
+}
+
+header.is-on-white .logo-site img {
+  /* Logo swap handled in main.js */
+}
+
+header.is-on-white.is-sticky {
+  background-color: rgba(255, 255, 255, 0.2);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
 .tf-header {
   padding-top: 36px;
   padding-bottom: 36px;
