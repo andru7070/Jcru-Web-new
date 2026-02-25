@@ -545,13 +545,18 @@
                     .section-testimonial-v2 {
                         position: relative;
                         overflow: hidden;
+                        /* Configurable quote positions */
+                        --quote-left-top: 60%;
+                        --quote-left-left: 15%;
+                        --quote-right-bottom: -5%;
+                        --quote-right-right: 15%;
                     }
 
                     .section-testimonial-v2::before {
                         content: '\201C';
                         position: absolute;
-                        top: 60%;
-                        left: 15%;
+                        top: var(--quote-left-top);
+                        left: var(--quote-left-left);
                         transform: translate(-50%, -50%);
                         font-size: 800px;
                         color: transparent;
@@ -567,8 +572,8 @@
                     .section-testimonial-v2::after {
                         content: '\201D';
                         position: absolute;
-                        bottom: 20%;
-                        right: 15%;
+                        bottom: var(--quote-right-bottom);
+                        right: var(--quote-right-right);
                         transform: translate(50%, 50%);
                         font-size: 800px;
                         color: transparent;
