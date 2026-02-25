@@ -4417,7 +4417,8 @@ select option {
   position: relative;
   color: var(--white);
   border-radius: 10px;
-  font-weight: 500;
+  font-family: "Helvetica", Arial, sans-serif;
+  font-weight: 400;
   font-size: 12px;
   line-height: 16px;
   letter-spacing: -0.01em;
@@ -8399,12 +8400,12 @@ button.animate-btn::after,
   color: var(--white-64);
   padding: 8px 24px;
   border-radius: 100px;
+  font-family: "Helvetica", Arial, sans-serif;
   font-size: 14px;
-  font-weight: 500;
+  font-weight: 400;
   transition: all 0.3s ease;
   cursor: pointer;
-  text-transform: uppercase;
-  letter-spacing: 1px;
+  letter-spacing: -0.01em;
   margin: 5px;
 }
 
