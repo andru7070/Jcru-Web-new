@@ -4476,6 +4476,21 @@ select option {
   border-radius: 999px;
 }
 
+.tf-btn.whatsapp {
+  background-color: #25D366;
+  border-color: #25D366;
+  color: var(--white);
+}
+
+.tf-btn.whatsapp::before {
+  background-color: #128C7E;
+}
+
+.tf-btn.whatsapp:hover {
+  color: var(--white);
+  border-color: #128C7E;
+}
+
 .tf-btn.style-fill {
   background-color: var(--primary);
   border-color: var(--primary);
@@ -8593,5 +8608,6 @@ button.animate-btn::after,
 }
 
 img[loading="lazy"] {
-  background-color: rgba(255, 255, 255, 0.05); /* Subtle placeholder color */
+  background-color: rgba(255, 255, 255, 0.05);
+  /* Subtle placeholder color */
 }
