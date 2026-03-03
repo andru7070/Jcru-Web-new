@@ -8582,3 +8582,16 @@ button.animate-btn::after,
 }
 
 /*# sourceMappingURL=styles.css.map */
+/* Lazy Loading Styles */
+.lazy-load {
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
+}
+
+.lazy-load.loaded {
+  opacity: 1;
+}
+
+img[loading="lazy"] {
+  background-color: rgba(255, 255, 255, 0.05); /* Subtle placeholder color */
+}

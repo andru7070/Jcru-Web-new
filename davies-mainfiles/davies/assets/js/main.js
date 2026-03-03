@@ -397,6 +397,71 @@
         });
     };
 
+    /* Lazy Loader
+    -------------------------------------------------------------------------*/
+    var lazyLoader = function () {
+        const lazyElements = document.querySelectorAll('img, video, iframe');
+
+        const options = {
+            root: null,
+            rootMargin: '100px 0px',
+            threshold: 0.01
+        };
+
+        const imageObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const el = entry.target;
+
+                    // Handle Videos
+                    if (el.tagName === 'VIDEO') {
+                        const sources = el.querySelectorAll('source');
+                        if (sources.length > 0) {
+                            sources.forEach(source => {
+                                if (source.dataset.src) {
+                                    source.src = source.dataset.src;
+                                }
+                            });
+                            el.load();
+                        } else if (el.dataset.src) {
+                            el.src = el.dataset.src;
+                            el.load();
+                        }
+                    }
+
+                    // Add loaded class for fade-in effect
+                    if (el.tagName === 'IMG') {
+                        if (el.complete) {
+                            el.classList.add('loaded');
+                        } else {
+                            el.addEventListener('load', () => el.classList.add('loaded'), { once: true });
+                        }
+                    } else {
+                        el.classList.add('loaded');
+                    }
+
+                    observer.unobserve(el);
+                }
+            });
+        }, options);
+
+        lazyElements.forEach(el => {
+            // Add lazy-load class if not present
+            if (!el.classList.contains('lazy-load')) {
+                el.classList.add('lazy-load');
+            }
+
+            // Set native lazy loading for images and iframes
+            if (el.tagName === 'IMG' || el.tagName === 'IFRAME') {
+                if (!el.getAttribute('loading')) {
+                    el.setAttribute('loading', 'lazy');
+                }
+            }
+
+            imageObserver.observe(el);
+        });
+    };
+
     // Dom Ready
     $(function () {
         infiniteSlide();
@@ -414,6 +479,7 @@
         hoverYoutubeCards();
         itemFiltering();
         videoModal();
+        lazyLoader();
     });
 
     /* Category Filtering
