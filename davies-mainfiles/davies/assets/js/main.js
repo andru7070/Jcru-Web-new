@@ -326,22 +326,17 @@
     /* Hover Video Cards
     -------------------------------------------------------------------------*/
     var hoverVideoCards = function () {
+        const isMobileOrTablet = window.innerWidth <= 991 || ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
+
         $(".hover-video-card").each(function () {
             var $card = $(this);
             var $video = $card.find("video").get(0);
 
             if ($video) {
-                // Force first frame to show on load
+                // Force first frame (or poster state) to show
                 $video.currentTime = 0.01;
 
-                var isMobileOrTablet = window.innerWidth <= 991 || ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
-
-                if (isMobileOrTablet) {
-                    // Autoplay on mobile/tablet view
-                    $video.play().catch(function (err) {
-                        console.log("Video autoplay failed:", err);
-                    });
-                } else {
+                if (!isMobileOrTablet) {
                     // Play on hover for desktop view
                     $card.on("mouseenter", function () {
                         $video.play().catch(function (err) {
@@ -426,6 +421,12 @@
                         } else if (el.dataset.src) {
                             el.src = el.dataset.src;
                             el.load();
+                        }
+
+                        // Autoplay logic for mobile/tablet in Selected Works (hover-video-card)
+                        const isMobileOrTablet = window.innerWidth <= 991 || ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
+                        if (isMobileOrTablet && el.closest('.hover-video-card')) {
+                            el.play().catch(err => console.log("Video autoplay failed:", err));
                         }
                     }
 
