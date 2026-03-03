@@ -43,6 +43,18 @@
             $("html, body").animate({ scrollTop: 0 }, 100);
         });
     };
+    /* Header Sticky
+    -------------------------------------------------------------------------*/
+    var headerSticky = function () {
+        var $header = $(".tf-header");
+        $(window).on("scroll", function () {
+            if ($(window).scrollTop() > 50) {
+                $header.addClass("scrolled");
+            } else {
+                $header.removeClass("scrolled");
+            }
+        });
+    };
     /* Infinite Slide 
     -------------------------------------------------------------------------*/
     var infiniteSlide = function () {
@@ -226,8 +238,96 @@
         });
     };
 
+    /* Decode Hover Effect
+    -------------------------------------------------------------------------*/
+    var decodeEffect = () => {
+        const letters = "abcdefghijklmnopqrstuvwxyz0123456789";
+
+        $(".hover-decode").on("mouseenter", function (event) {
+            let iteration = 0;
+            const $this = $(this);
+            clearInterval($this.data("interval"));
+            const originalText = $this.attr("data-text");
+
+            const interval = setInterval(() => {
+                $this.text(
+                    originalText
+                        .split("")
+                        .map((letter, index) => {
+                            if (index < iteration) {
+                                return originalText[index];
+                            }
+                            // Don't scramble spaces
+                            if (originalText[index] === " ") return " ";
+
+                            return letters[Math.floor(Math.random() * letters.length)];
+                        })
+                        .join("")
+                );
+
+                if (iteration >= originalText.length) {
+                    clearInterval($this.data("interval"));
+                }
+
+                iteration += 1;
+            }, 20);
+
+            $this.data("interval", interval);
+        }).on("mouseleave", function () {
+            const $this = $(this);
+            clearInterval($this.data("interval"));
+            $this.text($this.attr("data-text"));
+        });
+    };
+
+    /* Video Features (Hover & Modal)
+    -------------------------------------------------------------------------*/
+    var handleVideoFeatures = () => {
+        // Video hover play/pause
+        $(".wg-work").on("mouseenter", function () {
+            var video = $(this).find(".hover-play-video").get(0);
+            if (video) {
+                video.play().catch(function () {
+                    // Ignore abort errors
+                });
+            }
+        }).on("mouseleave", function () {
+            var video = $(this).find(".hover-play-video").get(0);
+            if (video) {
+                video.pause();
+            }
+        });
+
+        // Modal Video Player Handling
+        const videoModal = document.getElementById('videoModal');
+        const modalVideoPlayer = document.getElementById('modalVideoPlayer');
+
+        if (videoModal && modalVideoPlayer) {
+            videoModal.addEventListener('show.bs.modal', function (event) {
+                // Button that triggered the modal
+                const button = event.relatedTarget;
+                // Extract video source info from data-video-src attributes
+                const videoSrc = button.getAttribute('data-video-src');
+
+                // Update the video source and play
+                if (videoSrc) {
+                    modalVideoPlayer.querySelector('source').setAttribute('src', videoSrc);
+                    modalVideoPlayer.load();
+                    modalVideoPlayer.play().catch(console.error);
+                }
+            });
+
+            videoModal.addEventListener('hide.bs.modal', function () {
+                // Pause the video when modal is closed
+                modalVideoPlayer.pause();
+                modalVideoPlayer.currentTime = 0; // Reset video to beginning
+            });
+        }
+    };
+
     // Dom Ready
     $(function () {
+        headerSticky();
         infiniteSlide();
         updateClock();
         cursorTrail();
@@ -236,5 +336,7 @@
         counterOdo();
         openMbMenu();
         clickActive();
+        decodeEffect();
+        handleVideoFeatures();
     });
 })(jQuery);

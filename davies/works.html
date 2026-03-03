@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+
+<!--[if IE 8]><html class="ie" xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US" lang="en-US"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!-->
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US" lang="en-US">
+<!--<![endif]-->
+
+<head>
+    <meta charset="utf-8">
+    <title>Jcru Studio</title>
+    <meta name="author" content="themesflat.com">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description"
+        content="Jcru Studio - Personal Portfolio is a sleek and modern HTML template designed for developers, designers, freelancers, and professionals who want to showcase their work online. Fully responsive, SEO-friendly, and easy to customize, it helps you create a strong personal brand and impress potential clients or employers.">
+
+    <!-- font -->
+    <link rel="stylesheet" href="assets/fonts/fonts.css">
+    <link rel="stylesheet" href="assets/icon/icomoon/style.css">
+    <!-- css -->
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/swiper-bundle.min.css">
+    <link rel="stylesheet" href="assets/css/animate.css">
+    <link rel="stylesheet" href="assets/css/odometer.min.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/styles.css">
+
+    <!-- Favicon and Touch Icons  -->
+    <link rel="shortcut icon" href="assets/images/logo/Icon.png">
+    <link rel="apple-touch-icon-precomposed" href="assets/images/logo/Icon.png">
+</head>
+
+<body class="counter-scroll">
+    <canvas class="cursor-trail d-none d-xl-block" id="trail"></canvas>
+
+
+    <!-- Scroll Top -->
+    <button id="goTop">
+        <span class="border-progress"></span>
+        <span class="ic-wrap">
+            <span class="icon icon-arrow-caret-right"></span>
+        </span>
+    </button>
+    <!-- /Scroll Top -->
+
+    <!-- Preload -->
+    <div class="preloader overflow-hidden">
+        <div class="site-name"><span>Transforming Ideas to Visuals</span></div>
+        <div class="preloader-gutters">
+            <div class="bar">
+                <div class="inner-bar"></div>
+            </div>
+            <div class="bar">
+                <div class="inner-bar"></div>
+            </div>
+            <div class="bar">
+                <div class="inner-bar"></div>
+            </div>
+            <div class="bar">
+                <div class="inner-bar"></div>
+            </div>
+            <div class="bar">
+                <div class="inner-bar"></div>
+            </div>
+            <div class="bar">
+                <div class="inner-bar"></div>
+            </div>
+            <div class="bar">
+                <div class="inner-bar"></div>
+            </div>
+            <div class="bar">
+                <div class="inner-bar"></div>
+            </div>
+        </div>
+    </div>
+    <!-- /Preload -->
+
+    <main id="wrapper">
+        <!-- Header -->
+        <header class="tf-header style-2">
+            <div class="header-inner">
+                <div class="container">
+                    <div class="row align-items-center">
+                        <div class="col-6 col-md-2 text-start">
+                            <a href="index.html" class="logo-site d-inline-block">
+                                <img src="assets/images/logo/JcruStudio Logo white.png" alt="JCRU studio"
+                                    class="logo-img" width="259" height="77">
+                            </a>
+                        </div>
+                        <div class="col-3 col-md-2 ms-xl-auto d-none d-md-block">
+                            <ul class="tf-list nav-links-inline flex-nowrap" style="gap: 24px;">
+                                <li> <a href="works.html" class="link text-caption"
+                                        style="font-size: 1.4em; white-space: nowrap;">Our Works</a>
+                                </li>
+                                <li> <a href="#serviceScroll" class="link text-caption"
+                                        style="font-size: 1.4em;">Services</a></li>
+                                <li> <a href="#aboutScroll" class="link text-caption"
+                                        style="font-size: 1.4em;">About</a></li>
+                                <li> <a href="#contactScroll" class="link text-caption"
+                                        style="font-size: 1.4em;">Contact</a></li>
+                            </ul>
+                        </div>
+                        <div class="col-3 col-md-2 d-none ms-auto ms-xl-0">
+                            <div class="header-contact ps-4" style="transform: translateX(200px);">
+                                <a href="mailto:hey@jcru.in" class="link text-caption d-flex align-items-center gap-1"
+                                    style="text-transform: lowercase; font-size: 1.4em;">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path
+                                            d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z">
+                                        </path>
+                                        <polyline points="22,6 12,13 2,6"></polyline>
+                                    </svg>
+                                    hey@jcru.in
+                                </a>
+                                <p class="text-caption text-utc" style="font-size: 1.4em;">
+                                    <i class="icon icon-globe"></i>
+                                    Bangalore, India
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-6 col-sm-3 col-md-2 d-flex justify-content-end align-items-start d-md-none">
+                            <button type="button" class="btn-mobile-menu open-mb-menu text-caption text-white link">
+                                <i class="icon icon-menu"></i>
+                                Menu
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <!-- /Header -->
+
+        <!-- Select Work -->
+        <section class="section-selected-work-v2 flat-spacing" id="workScroll" style="padding-top: 150px;">
+            <div class="container">
+                <div class="row g-4">
+                    <div class="col-md-6 col-12 mb-4">
+                        <a href="#" class="wg-work effectFade fadeUp no-div" data-bs-toggle="modal"
+                            data-bs-target="#videoModal"
+                            data-video-src="assets/images/video/Honeywell ReEngineerAI 05.mp4">
+                            <div class="work-image" style="border-radius: 20px; overflow: hidden;">
+                                <video class="hover-play-video" muted="" loop="" playsinline="">
+                                    <source src="assets/images/video/Honeywell ReEngineerAI 05.mp4" type="video/mp4">
+                                </video>
+                            </div>
+                            <div class="work-content">
+                                <div class="work_top">
+                                    <h5 class="letter-space--2"></h5>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-md-6 col-12 mb-4">
+                        <a href="#" class="wg-work effectFade fadeUp no-div" data-bs-toggle="modal"
+                            data-bs-target="#videoModal" data-delay="0.1"
+                            data-video-src="assets/images/video/Myntra Fashion in figures 02.mp4">
+                            <div class="work-image" style="border-radius: 20px; overflow: hidden;">
+                                <video class="hover-play-video" muted="" loop="" playsinline="">
+                                    <source src="assets/images/video/Myntra Fashion in figures 02.mp4" type="video/mp4">
+                                </video>
+                            </div>
+                            <div class="work-content">
+                                <div class="work_top">
+                                    <h5 class="letter-space--2"></h5>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-md-6 col-12 mb-4">
+                        <a href="#" class="wg-work effectFade fadeUp no-div" data-bs-toggle="modal"
+                            data-bs-target="#videoModal" data-delay="0.2"
+                            data-video-src="assets/images/video/Nopo Amp.mp4">
+                            <div class="work-image" style="border-radius: 20px; overflow: hidden;">
+                                <video class="hover-play-video" muted="" loop="" playsinline="">
+                                    <source src="assets/images/video/Nopo Amp.mp4" type="video/mp4">
+                                </video>
+                            </div>
+                            <div class="work-content">
+                                <div class="work_top">
+                                    <h5 class="letter-space--2"></h5>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-md-6 col-12 mb-4">
+                        <a href="#" class="wg-work effectFade fadeUp no-div" data-bs-toggle="modal"
+                            data-bs-target="#videoModal" data-delay="0.3"
+                            data-video-src="assets/images/video/davies-video.mp4">
+                            <div class="work-image" style="border-radius: 20px; overflow: hidden;">
+                                <video class="hover-play-video" muted="" loop="" playsinline="">
+                                    <source src="assets/images/video/davies-video.mp4" type="video/mp4">
+                                </video>
+                            </div>
+                            <div class="work-content">
+                                <div class="work_top">
+                                    <h5 class="letter-space--2"></h5>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-md-6 col-12 mb-4">
+                        <a href="#" class="wg-work effectFade fadeUp no-div" data-bs-toggle="modal"
+                            data-bs-target="#videoModal" data-delay="0.4"
+                            data-video-src="assets/images/video/Honeywell ReEngineerAI 05.mp4">
+                            <div class="work-image" style="border-radius: 20px; overflow: hidden;">
+                                <video class="hover-play-video" muted="" loop="" playsinline="">
+                                    <source src="assets/images/video/Honeywell ReEngineerAI 05.mp4" type="video/mp4">
+                                </video>
+                            </div>
+                            <div class="work-content">
+                                <div class="work_top">
+                                    <h5 class="letter-space--2"></h5>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-md-6 col-12 mb-4">
+                        <a href="#" class="wg-work effectFade fadeUp no-div" data-bs-toggle="modal"
+                            data-bs-target="#videoModal" data-delay="0.5"
+                            data-video-src="assets/images/video/Myntra Fashion in figures 02.mp4">
+                            <div class="work-image" style="border-radius: 20px; overflow: hidden;">
+                                <video class="hover-play-video" muted="" loop="" playsinline="">
+                                    <source src="assets/images/video/Myntra Fashion in figures 02.mp4" type="video/mp4">
+                                </video>
+                            </div>
+                            <div class="work-content">
+                                <div class="work_top">
+                                    <h5 class="letter-space--2"></h5>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- /Select Work -->
+        <!-- Footer -->
+        <footer class="tf-footer style-2">
+            <div class="container">
+                <div class="br-line"></div>
+            </div>
+            <div class="container">
+                <div class="footer-inner text-caption letter-space--1 fw-medium">
+                    <a href="works.html" class="link text-caption" style="font-size: 1.4em; white-space: nowrap;">Our
+                        Works</a>
+                    <a href="#serviceScroll" class="link">Services</a>
+                    <a href="#aboutScroll" class="link">About</a>
+                    <a href="#" class="action-go-top tf-link-icon link">
+                        Back to top
+                        <i class="icon icon-arrow-long-right"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <div class="container">
+                    <div class="bottom text-caption letter-space--1 fw-medium">
+                        <p class="text-nocopy">
+                            © Jcru Studio's Personal Portfolio
+                        </p>
+                        <p class="">
+                            Cupertino → <span class="clock"></span>
+                        </p>
+                        <div class="right">
+                            <a href="#" class="tf-link-icon link">
+                                Twitter (X)
+                            </a>
+                            <a href="#" class="tf-link-icon link">
+                                Dribbble
+                            </a>
+                            <a href="#" class="tf-link-icon link">
+                                LinkedIn
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+        <!-- /Footer -->
+    </main>
+    <!-- Mobile Menu -->
+    <div class="offcanvas-menu">
+        <div class="offcanvas-content">
+            <div class="container h-100">
+                <div class="offcanvas-content_wrapin">
+                    <div class="canvas_head">
+                        <a href="index.html" class="logo-site">
+                            <i class="icon icon-davies-logo"></i>
+                        </a>
+                        <div class="btn-mobile-menu close-mb-menu text-caption link">
+                            <i class="icon icon-close"></i>
+                            Close
+                        </div>
+                    </div>
+                    <div class="canvas_center">
+                        <ul class="nav-ul-mb">
+                            <li>
+                                <div class="item close-mb-menu">
+                                    <a href="works.html" class="mb-menu-link text-display-1">
+                                        <span class="text" style="white-space: nowrap;">Our Works</span>
+                                        <div class="infiniteSlide_text_main">
+                                            <div class="infiniteSlide infiniteSlide_text" data-clone="5">
+                                                <p class="text-body-2 letter-space--1">
+                                                    <span class="text-primary">//</span> View Works
+                                                </p>
+                                                <p class="text-body-2 letter-space--1">
+                                                    <span class="text-primary">//</span> View Works
+                                                </p>
+                                                <p class="text-body-2 letter-space--1">
+                                                    <span class="text-primary">//</span> View Works
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="item close-mb-menu">
+                                    <a href="#aboutScroll" class="mb-menu-link text-display-1">
+                                        <span class="text">About</span>
+                                        <div class="infiniteSlide_text_main">
+                                            <div class="infiniteSlide infiniteSlide_text" data-clone="5">
+                                                <p class="text-body-2 letter-space--1">
+                                                    <span class="text-primary">//</span> View About
+                                                </p>
+                                                <p class="text-body-2 letter-space--1">
+                                                    <span class="text-primary">//</span> View About
+                                                </p>
+                                                <p class="text-body-2 letter-space--1">
+                                                    <span class="text-primary">//</span> View About
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="item close-mb-menu">
+                                    <a href="#serviceScroll" class="mb-menu-link text-display-1">
+                                        <span class="text">Services</span>
+                                        <div class="infiniteSlide_text_main">
+                                            <div class="infiniteSlide infiniteSlide_text" data-clone="5">
+                                                <p class="text-body-2 letter-space--1">
+                                                    <span class="text-primary">//</span> View Services
+                                                </p>
+                                                <p class="text-body-2 letter-space--1">
+                                                    <span class="text-primary">//</span> View Services
+                                                </p>
+                                                <p class="text-body-2 letter-space--1">
+                                                    <span class="text-primary">//</span> View Services
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="item close-mb-menu">
+                                    <a href="#contactScroll" class="mb-menu-link text-display-1">
+                                        <span class="text">Contact</span>
+                                        <div class="infiniteSlide_text_main">
+                                            <div class="infiniteSlide infiniteSlide_text" data-clone="5">
+                                                <p class="text-body-2 letter-space--1">
+                                                    <span class="text-primary">//</span> View Contact
+                                                </p>
+                                                <p class="text-body-2 letter-space--1">
+                                                    <span class="text-primary">//</span> View Contact
+                                                </p>
+                                                <p class="text-body-2 letter-space--1">
+                                                    <span class="text-primary">//</span> View Contact
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="canvas_foot">
+                        <div class="left">
+                            <a href="mailto:hey@jcru.in" class="link text-caption">hey@jcru.in</a>
+                            <p class="text-caption">
+                                CUP <span class="clock"></span>
+                            </p>
+                        </div>
+                        <div class="right">
+                            <a href="#" class="tf-link-icon text-caption link">
+                                <i class="icon icon-arrow-top-right"></i>
+                                Twitter (X)
+                            </a>
+                            <a href="#" class="tf-link-icon text-caption link">
+                                <i class="icon icon-arrow-top-right"></i>
+                                Dribbble
+                            </a>
+                            <a href="#" class="tf-link-icon text-caption link">
+                                <i class="icon icon-arrow-top-right"></i>
+                                LinkedIn
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Video Modal -->
+    <div class="modal fade" id="videoModal" tabindex="-1" aria-labelledby="videoModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-xl">
+            <div class="modal-content bg-transparent border-0">
+                <div class="modal-header border-0 pb-0 justify-content-end">
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"
+                        style="filter: invert(1); z-index: 10;"></button>
+                </div>
+                <div class="modal-body p-0 text-center">
+                    <video id="modalVideoPlayer" class="w-100 rounded-3 shadow-lg" controls playsinline>
+                        <source src="" type="video/mp4">
+                    </video>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Javascript -->
+    <script src="assets/js/bootstrap.min.js"></script>
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/swiper-bundle.min.js"></script>
+    <script src="assets/js/carousel.js"></script>
+
+    <script src="assets/js/infinityslide.js"></script>
+    <script src="assets/js/ScrollSmooth.js"></script>
+    <script src="assets/js/gsap.min.js"></script>
+    <script src="assets/js/gsapAnimation.js"></script>
+    <script src="assets/js/SplitText.min.js"></script>
+    <script src="assets/js/ScrollTrigger.min.js"></script>
+    <script src="assets/js/odometer.min.js"></script>
+    <script src="assets/js/jquery.nice-select.min.js"></script>
+    <script src="assets/js/unicornStudio.umd.js"></script>
+    <script src="assets/js/main.js"></script>
+    <script>
+        UnicornStudio.init();
+    </script>
+</body>
+
+</html>
