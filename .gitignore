@@ -1,0 +1,15 @@
+# Common macOS files
+.DS_Store
+._*
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Archive folder for unused files
+archive/
+backups/
+
+# Template documentation
+davies-mainfiles/documentation/

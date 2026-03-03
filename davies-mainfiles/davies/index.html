@@ -658,6 +658,19 @@
                     padding: 50px 0 100px;
                 }
 
+                .swiper-testimonial-premium .swiper-slide {
+                    transition: all 0.6s ease;
+                    opacity: 0.7;
+                    filter: blur(1.5px);
+                    pointer-events: none;
+                }
+
+                .swiper-testimonial-premium .swiper-slide-active {
+                    opacity: 1 !important;
+                    filter: blur(0) !important;
+                    pointer-events: auto;
+                }
+
                 .premium-nav {
                     display: flex;
                     gap: 15px;
@@ -728,7 +741,7 @@
                                 <div class="tes-footer">
                                     <div class="author_info">
                                         <h6 class="name">Noble J Nooruparayil</h6>
-                                        <p class="designation">GM Brand & Marketing, Sephora Info Solutions</p>
+                                        <p class="designation">GM Brand & Marketing, <br>Sephora Info Solutions</p>
                                     </div>
                                 </div>
                             </div>
