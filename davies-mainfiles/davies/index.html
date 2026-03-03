@@ -538,269 +538,315 @@
             </div>
         </div>
         <!-- /Brand -->
-        <!-- Client Testimonials -->
-        <section class="section-testimonial-v2 flat-spacing bg-white text-black" style="padding-top: 0px !important;">
-            <div class="container">
-                <div class="s-header d-block">
-                    <h2 class="text-display-2 letter-space--3 text-center effectFade fadeUp text-black">
-                        <span style="font-size: 50%;">What our clients says about us</span>
+        <section class="section-testimonial-premium flat-spacing bg-black overflow-hidden" id="testimonials">
+            <style>
+                .section-testimonial-premium {
+                    background: #000;
+                    position: relative;
+                    padding: 100px 0;
+                }
+
+
+
+                .testimonial-card-v3 {
+                    background: rgba(255, 255, 255, 0.03);
+                    backdrop-filter: blur(25px);
+                    -webkit-backdrop-filter: blur(25px);
+                    border: 1px solid rgba(255, 255, 255, 0.08);
+                    border-radius: 32px;
+                    padding: 60px 50px;
+                    transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+                    position: relative;
+                    height: 100%;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: space-between;
+                }
+
+                .testimonial-card-v3:hover {
+                    background: rgba(255, 255, 255, 0.05);
+                    border-color: rgba(255, 255, 255, 0.15);
+                    transform: translateY(-8px);
+                    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5);
+                }
+
+                .testimonial-card-v3 .quote-mark {
+                    position: absolute;
+                    top: 40px;
+                    right: 40px;
+                    font-size: 100px;
+                    line-height: 1;
+                    color: rgba(255, 255, 255, 0.03);
+                    font-family: Georgia, serif;
+                    pointer-events: none;
+                    user-select: none;
+                }
+
+                .testimonial-card-v3 .tes-text {
+                    font-size: clamp(18px, 1.4vw, 22px);
+                    line-height: 1.6;
+                    color: rgba(255, 255, 255, 0.85);
+                    margin-bottom: 50px;
+                    position: relative;
+                    z-index: 1;
+                    font-weight: 300;
+                    letter-spacing: 0.2px;
+                    text-align: left;
+                }
+
+                .testimonial-card-v3 .tes-footer {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: flex-end;
+                    position: relative;
+                    z-index: 1;
+                    width: 100%;
+                }
+
+                .testimonial-card-v3 .author_info {
+                    text-align: left;
+                }
+
+                .testimonial-card-v3 .name {
+                    font-size: 20px;
+                    font-weight: 600;
+                    margin-bottom: 6px;
+                    color: #fff;
+                    letter-spacing: -0.2px;
+                }
+
+                .testimonial-card-v3 .designation {
+                    font-size: 13px;
+                    color: rgba(255, 255, 255, 0.45);
+                    text-transform: uppercase;
+                    letter-spacing: 1.5px;
+                    font-weight: 500;
+                }
+
+                .testimonial-card-v3 .author-logo {
+                    background: transparent !important;
+                    border: none !important;
+                    box-shadow: none !important;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    flex-shrink: 0;
+                    overflow: hidden;
+
+                }
+
+                .testimonial-card-v3 .author-logo img {
+                    width: auto;
+                    height: 60px;
+                    object-fit: contain;
+                    padding: 0 !important;
+                    background: transparent !important;
+                    background-color: transparent !important;
+                    border: none !important;
+                    border-radius: 0 !important;
+                    box-shadow: none !important;
+                    opacity: 0.95;
+                    transition: all 0.4s ease;
+                }
+
+                .testimonial-card-v3:hover .author-logo img {
+                    opacity: 1;
+                    transform: scale(1.05);
+                }
+
+                .swiper-testimonial-premium {
+                    padding: 50px 0 100px;
+                }
+
+                .premium-nav {
+                    display: flex;
+                    gap: 15px;
+                    margin-top: 30px;
+                }
+
+                .premium-nav-btn {
+                    width: 54px;
+                    height: 54px;
+                    border: 1px solid rgba(230, 50, 0, 0.1);
+                    border-radius: 50%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    color: #fff;
+                    cursor: pointer;
+                    transition: all 0.4s ease;
+                    background: rgba(255, 255, 255, 0.03);
+                }
+
+                .premium-nav-btn:hover {
+                    background: #1a27c9;
+                    border-color: #1a27c9;
+                    transform: scale(1.05);
+                }
+
+                .premium-pagination .swiper-pagination-bullet {
+                    background: rgba(255, 255, 255, 0.15);
+                    opacity: 1;
+                    width: 10px;
+                    height: 10px;
+                    margin: 0 6px !important;
+                    transition: all 0.4s ease;
+                }
+
+                .premium-pagination .swiper-pagination-bullet-active {
+                    background: #1a27c9;
+                    width: 32px;
+                    border-radius: 5px;
+                }
+
+                @media (max-width: 991px) {
+                    .testimonial-card-v3 {
+                        padding: 45px 35px;
+                    }
+                }
+            </style>
+
+            <div class="container tf-btn-swiper-main">
+                <div class="s-header mb-0 text-center">
+                    <h2 class="text-display-2 text-white effectFade fadeUp text-center">What our clients says about us
                     </h2>
                 </div>
-                <style>
-                    .section-testimonial-v2 {
-                        position: relative;
-                        overflow: hidden;
-                        /* Configurable quote positions */
-                        --quote-left-top: 60%;
-                        --quote-left-left: 15%;
-                        --quote-right-bottom: -5%;
-                        --quote-right-right: 15%;
-                    }
 
-                    .section-testimonial-v2::before {
-                        content: '\201C';
-                        position: absolute;
-                        top: var(--quote-left-top);
-                        left: var(--quote-left-left);
-                        transform: translate(-50%, -50%);
-                        font-size: 800px;
-                        color: transparent;
-                        -webkit-text-stroke: 1px rgba(0, 21, 255, 0.2);
-                        opacity: 1;
-                        z-index: 0;
-                        line-height: 1;
-                        pointer-events: none;
-                        font-family: Arial, Helvetica, sans-serif;
-                        user-select: none;
-                    }
-
-                    .section-testimonial-v2::after {
-                        content: '\201D';
-                        position: absolute;
-                        bottom: var(--quote-right-bottom);
-                        right: var(--quote-right-right);
-                        transform: translate(50%, 50%);
-                        font-size: 800px;
-                        color: transparent;
-                        -webkit-text-stroke: 1px rgba(0, 21, 255, 0.2);
-                        opacity: 1;
-                        z-index: 0;
-                        line-height: 1;
-                        pointer-events: none;
-                        font-family: Arial, Helvetica, sans-serif;
-                        user-select: none;
-                    }
-
-                    @media (max-width: 767px) {
-                        .section-selected-work-v2 .wg-work {
-                            width: 100% !important;
-                            max-width: 100% !important;
-                        }
-
-                        .section-selected-work-v2 .work-video {
-                            aspect-ratio: 16/9 !important;
-                            height: auto !important;
-                        }
-                    }
-
-                    .testimonial-v01 {
-                        position: relative;
-                        background: rgba(255, 255, 255, 0.03);
-                        backdrop-filter: blur(20px);
-                        -webkit-backdrop-filter: blur(20px);
-                        border: 1px solid rgba(0, 123, 255, 0.3) !important;
-                        overflow: hidden;
-                    }
-
-                    .testimonial-v01::after {
-                        content: "";
-                        position: absolute;
-                        inset: 0;
-                        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
-                        opacity: 0.05;
-                        pointer-events: none;
-                        z-index: -1;
-                    }
-
-                    .section-testimonial-v2 .container {
-                        position: relative;
-                        z-index: 1;
-                    }
-
-                    .swiper-testimonial .swiper-slide {
-                        display: flex;
-                        justify-content: center;
-                        align-items: center;
-                    }
-
-                    .swiper-testimonial.tf-swiper {
-                        padding-bottom: 50px;
-                        position: relative;
-                    }
-
-                    .swiper-testimonial .swiper-button-next,
-                    .swiper-testimonial .swiper-button-prev {
-                        color: #007bff;
-                    }
-
-                    .swiper-testimonial .swiper-button-next::after,
-                    .swiper-testimonial .swiper-button-prev::after {
-                        font-size: 24px;
-                    }
-
-                    .swiper-testimonial .testimonial-v01 {
-                        transition: transform 0.4s ease, box-shadow 0.4s ease;
-                    }
-
-                    .swiper-testimonial .testimonial-v01:hover {
-                        transform: scale(1);
-                        box-shadow: 0 0 15px rgba(0, 123, 255, 0.4), inset 0 0 40px rgba(0, 123, 255, 0.6) !important;
-                    }
-                </style>
-                <div class="container tf-btn-swiper-main" style="padding-bottom: 40px;">
-                    <div dir="ltr" class="swiper tf-swiper swiper-testimonial" data-preview="1" data-tablet="1"
-                        data-mobile="1" data-space="30" data-loop="true" data-auto="true" data-delay="5000"
-                        data-speed="1000" data-center="true">
-                        <div class="swiper-wrapper">
-                            <!-- Testimonial Item 1 -->
-                            <div class="swiper-slide">
-                                <div class="testimonial-v01 mx-auto"
-                                    style="box-shadow: 0 0 15px rgba(0, 123, 255, 0.2); padding: 50px; border-radius: 12px; max-width: 800px; width: 100%;">
-                                    <div class="tes-text" style="text-align: left; margin-bottom: 30px;">
-                                        <p class="text-black-64 text-body-1" style="font-size: 18px; line-height: 1.6;">
-                                            "I’ve worked closely with the team at Jcru on multiple projects, and their
-                                            visual thinking is exceptional. They don’t just design — they create impact.
-                                            Their ability to see the bigger picture early and translate it into bold,
-                                            high-impact visual concepts that elevate the
-                                            entire experience is exceptional. Their work is visually strong, strategic
-                                            and immersive. <br> If you’re looking for a studio that you can rely on,
-                                            Jcru comes highly recommended."</p>
-                                    </div>
-                                    <div class="tes-author" style="text-align: left;">
-                                        <div class="author_info">
-                                            <h6 class="name text-black mb-0">Noble J Nooruparayil</h6>
-                                            <p class="designation text-black-64 mb-0" style="font-size: 15px;">
-                                                GM, Brand & Marketing, Sephora Info Solutions</p>
-                                        </div>
+                <div dir="ltr" class="swiper tf-swiper swiper-testimonial-premium" data-preview="1.5" data-tablet="1.2"
+                    data-mobile="1" data-space="30" data-loop="true" data-auto="true" data-delay="6000"
+                    data-speed="1200" data-center="true">
+                    <div class="swiper-wrapper">
+                        <!-- item 1 -->
+                        <div class="swiper-slide">
+                            <div class="testimonial-card-v3">
+                                <div class="quote-mark">“</div>
+                                <p class="tes-text">
+                                    "I’ve worked closely with the team at Jcru on multiple projects, and their visual
+                                    thinking is exceptional. They don’t just design — they create impact. Their ability
+                                    to see the bigger picture and translate it into bold concepts is unique."
+                                </p>
+                                <div class="tes-footer">
+                                    <div class="author_info">
+                                        <h6 class="name">Noble J Nooruparayil</h6>
+                                        <p class="designation">GM Brand & Marketing, Sephora Info Solutions</p>
                                     </div>
                                 </div>
                             </div>
-
-                            <!-- Testimonial Item 2 -->
-                            <div class="swiper-slide">
-                                <div class="testimonial-v01 mx-auto"
-                                    style="box-shadow: 0 0 15px rgba(0, 123, 255, 0.2); padding: 50px; border-radius: 12px; max-width: 800px; width: 100%;">
-                                    <div class="tes-text" style="text-align: left; margin-bottom: 30px;">
-                                        <p class="text-black-64 text-body-1" style="font-size: 18px; line-height: 1.6;">
-                                            "We worked with JCRU for a recent product shoot, and it was a great
-                                            experience overall. It was my first time planning with a detailed
-                                            storyboard, and the team — especially Cristin Joseph — made the entire
-                                            process seamless. The collaboration felt easy and comfortable, the
-                                            back-and-forth was smooth, and they were very receptive throughout. Most
-                                            importantly, the final delivery was on time and aligned well with what we
-                                            had envisioned. Looking forward to working together again"</p>
-                                    </div>
-                                    <div class="tes-author" style="text-align: left;">
-                                        <div class="author_info">
-                                            <h6 class="name text-black mb-0">Riya Rose</h6>
-                                            <p class="designation text-black-64 mb-0" style="font-size: 15px;">
-                                                Eblitz Creations</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Testimonial Item 3 -->
-                            <div class="swiper-slide">
-                                <div class="testimonial-v01 mx-auto"
-                                    style="box-shadow: 0 0 15px rgba(0, 123, 255, 0.2); padding: 50px; border-radius: 12px; max-width: 800px; width: 100%;">
-                                    <div class="tes-text" style="text-align: left; margin-bottom: 30px;">
-                                        <p class="text-black-64 text-body-1" style="font-size: 18px; line-height: 1.6;">
-                                            "From an employee with big dreams to a rock-solid production partner, Joseph
-                                            has grown into someone we trust completely. He delivers on time, on brief,
-                                            every time and is the first name we rely
-                                            on when things get hectic and we need to outsource. An absolute pleasure to
-                                            work with him and his team."</p>
-                                    </div>
-                                    <div class="tes-author" style="text-align: left;">
-                                        <div class="author_info">
-                                            <h6 class="name text-black mb-0">Hiten Goel</h6>
-                                            <p class="designation text-black-64 mb-0" style="font-size: 15px;">
-                                                Co-Founder, Moved Production</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Testimonial Item 4 -->
-                            <div class="swiper-slide">
-                                <div class="testimonial-v01 mx-auto"
-                                    style="box-shadow: 0 0 15px rgba(0, 123, 255, 0.2); padding: 50px; border-radius: 12px; max-width: 800px; width: 100%;">
-                                    <div class="tes-text" style="text-align: left; margin-bottom: 30px;">
-                                        <p class="text-black-64 text-body-1" style="font-size: 18px; line-height: 1.6;">
-                                            "Whenever I have something incredible to deliver, I come to Joseph and team.
-                                            From quality, timelines, taking lead and responsibility to delivering
-                                            enthralling video outputs,
-                                            they always deliver with a smiling face! Highly recommend working with this
-                                            talented team."</p>
-                                    </div>
-                                    <div class="tes-author" style="text-align: left;">
-                                        <div class="author_info">
-                                            <h6 class="name text-black mb-0">Sujan Sarathi</h6>
-                                            <p class="designation text-black-64 mb-0" style="font-size: 15px;">
-                                                Founder,Creative Director, Masterswork</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Testimonial Item 5 -->
-                            <div class="swiper-slide">
-                                <div class="testimonial-v01 mx-auto"
-                                    style="box-shadow: 0 0 15px rgba(0, 123, 255, 0.2); padding: 50px; border-radius: 12px; max-width: 800px; width: 100%;">
-                                    <div class="tes-text" style="text-align: left; margin-bottom: 30px;">
-                                        <p class="text-black-64 text-body-1" style="font-size: 18px; line-height: 1.6;">
-                                            "Their attention to detail and creative storytelling brought our event to
-                                            life on screen. Highly recommended for any brand seeking quality."</p>
-                                    </div>
-                                    <div class="tes-author" style="text-align: left;">
-                                        <div class="author_info">
-                                            <h6 class="name text-black mb-0">Amal K Benny</h6>
-                                            <p class="designation text-black-64 mb-0" style="font-size: 15px;">
-                                                Founder, Vox Events</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Testimonial Item 6 -->
-                            <div class="swiper-slide">
-                                <div class="testimonial-v01 mx-auto"
-                                    style="box-shadow: 0 0 15px rgba(0, 123, 255, 0.2); padding: 50px; border-radius: 12px; max-width: 800px; width: 100%;">
-                                    <div class="tes-text" style="text-align: left; margin-bottom: 30px;">
-                                        <p class="text-black-64 text-body-1" style="font-size: 18px; line-height: 1.6;">
-                                            "Fast turnaround times without compromising on quality. The execution was
-                                            flawless, and the entire process was remarkably smooth."</p>
-                                    </div>
-                                    <div class="tes-author" style="text-align: left;">
-                                        <div class="author_info">
-                                            <h6 class="name text-black mb-0">Arun David</h6>
-                                            <p class="designation text-black-64 mb-0" style="font-size: 15px;">
-                                                Client Relations, Infosys</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
                         </div>
+                        <!-- item 2 -->
+                        <div class="swiper-slide">
+                            <div class="testimonial-card-v3">
+                                <div class="quote-mark">“</div>
+                                <p class="tes-text">
+                                    "We worked with JCRU for a recent product shoot, and it was a great experience. The
+                                    collaboration felt easy, the back-and-forth was smooth, and they were very
+                                    receptive. The final delivery was perfectly on time."
+                                </p>
+                                <div class="tes-footer">
+                                    <div class="author_info">
+                                        <h6 class="name">Riya Rose</h6>
+                                        <p class="designation">Eblitz Creations</p>
+                                    </div>
+                                    <div class="author-logo">
+                                        <img src="assets/images/testimonial/eblitz.webp" alt="eblitz">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- item 3 -->
+                        <div class="swiper-slide">
+                            <div class="testimonial-card-v3">
+                                <div class="quote-mark">“</div>
+                                <p class="tes-text">
+                                    "From an employee with big dreams to a rock-solid production partner, Joseph has
+                                    grown into someone we trust completely. He delivers on time, on brief, every time.
+                                    An absolute pleasure to work with him."
+                                </p>
+                                <div class="tes-footer">
+                                    <div class="author_info">
+                                        <h6 class="name">Hiten Goel</h6>
+                                        <p class="designation">Co-Founder, Moved Production</p>
+                                    </div>
+                                    <div class="author-logo">
+                                        <img src="assets/images/testimonial/moved.webp" alt="moved">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- item 4 -->
+                        <div class="swiper-slide">
+                            <div class="testimonial-card-v3">
+                                <div class="quote-mark">“</div>
+                                <p class="tes-text">
+                                    "Whenever I have something incredible to deliver, I come to Joseph and team. From
+                                    quality and timelines to taking lead and delivering enthralling video outputs, they
+                                    always deliver with a smiling face!"
+                                </p>
+                                <div class="tes-footer">
+                                    <div class="author_info">
+                                        <h6 class="name">Sujan Sarathi</h6>
+                                        <p class="designation">Creative Director, Masterswork</p>
+                                    </div>
+                                    <div class="author-logo">
+                                        <img src="assets/images/testimonial/masterswork.webp" alt="masterswork">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- item 5 -->
+                        <div class="swiper-slide">
+                            <div class="testimonial-card-v3">
+                                <div class="quote-mark">“</div>
+                                <p class="tes-text">
+                                    "Their attention to detail and creative storytelling brought our event to life on
+                                    screen. Highly recommended for any brand seeking quality. Fast turnaround times
+                                    without compromising on quality."
+                                </p>
+                                <div class="tes-footer">
+                                    <div class="author_info">
+                                        <h6 class="name">Amal K Benny</h6>
+                                        <p class="designation">Founder, Vox Events</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- item 6 -->
+                        <div class="swiper-slide">
+                            <div class="testimonial-card-v3">
+                                <div class="quote-mark">“</div>
+                                <p class="tes-text">
+                                    "Fast turnaround times without compromising on quality. The execution was flawless,
+                                    and the entire process was remarkably smooth. They truly understand the corporate
+                                    brand voice."
+                                </p>
+                                <div class="tes-footer">
+                                    <div class="author_info">
+                                        <h6 class="name">Arun David</h6>
+                                        <p class="designation">Client Relations, Infosys</p>
+                                    </div>
+                                    <div class="author-logo">
+                                        <img src="assets/images/testimonial/infosys.webp" alt="infosys">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
-                        <!-- Navigation Arrows -->
-                        <div class="swiper-button-next nav-next-swiper"></div>
-                        <div class="swiper-button-prev nav-prev-swiper"></div>
+                    <div class="d-flex flex-column align-items-center mt-5">
+
+                        <div class="premium-nav">
+                            <div class="premium-nav-btn nav-prev-swiper">
+                                <i class="icon icon-arrow-caret-left"></i>
+                            </div>
+                            <div class="premium-nav-btn nav-next-swiper">
+                                <i class="icon icon-arrow-caret-right"></i>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </section>
+
         <!-- /Client Testimonials -->
         <div class="container">
             <div class="br-line"></div>
