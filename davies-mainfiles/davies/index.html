@@ -129,7 +129,7 @@
             <div class="bg-video">
                 <h1 style="position: absolute; z-index: -1; opacity: 0; pointer-events: none;">Video Production Studio
                     in Bangalore for Corporate Films & Event Videos</h1>
-                <video id="hero-video" muted playsinline loop preload="auto">
+                <video id="hero-video" playsinline preload="auto">
                     <source src="assets/video/corporate-video-production-jcru.webm"
                         alt="Corporate video production by Jcru Studio Bangalore" type="video/webm">
                 </video>
@@ -1093,6 +1093,25 @@
 
     <script>
         UnicornStudio.init();
+
+        // Hero Video logic: Play audio only once, then loop silently
+        document.addEventListener('DOMContentLoaded', function () {
+            const heroVideo = document.getElementById('hero-video');
+            if (heroVideo) {
+                heroVideo.muted = false;
+                heroVideo.play().catch(error => {
+                    // Fallback to muted autoplay if unmuted is blocked
+                    heroVideo.muted = true;
+                    heroVideo.play();
+                });
+
+                heroVideo.addEventListener('ended', function () {
+                    heroVideo.muted = true;
+                    heroVideo.loop = true;
+                    heroVideo.play();
+                }, { once: true });
+            }
+        });
     </script>
 </body>
 
