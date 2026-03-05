@@ -45,6 +45,51 @@
     <!-- Favicon and Touch Icons  -->
     <link rel="shortcut icon" href="assets/images/logo/favicon.png">
     <link rel="apple-touch-icon-precomposed" href="assets/images/logo/favicon.png">
+
+    <!-- Schema.org Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "LocalBusiness",
+      "name": "Jcru Studio",
+      "image": "https://jcru.in/assets/images/logo/jcru-logo.png",
+      "@id": "https://jcru.in/",
+      "url": "https://jcru.in/",
+      "telephone": "+91-1234567890",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Your Street Address",
+        "addressLocality": "Bangalore",
+        "addressRegion": "Karnataka",
+        "postalCode": "560001",
+        "addressCountry": "IN"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 12.9716,
+        "longitude": 77.5946
+      },
+      "openingHoursSpecification": {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": [
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Friday",
+          "Saturday"
+        ],
+        "opens": "09:00",
+        "closes": "18:00"
+      },
+      "sameAs": [
+        "https://www.facebook.com/jcru.in",
+        "https://www.instagram.com/jcru_studio/",
+        "https://www.linkedin.com/company/jcru-studio/"
+      ],
+      "description": "Jcru Studio is a premier corporate video production house in Bangalore specializing in brand films, explainer videos, and high-end animations."
+    }
+    </script>
 </head>
 
 <body class="counter-scroll">
@@ -290,23 +335,13 @@
         <!-- About Me -->
         <section class="section-about-me-v2 flat-spacing" id="aboutScroll">
             <div class="container">
-                <div class="about-main flat-spacing-bottom">
-                    <div class="jcru-video">
-                        <video class="video lazy-load" muted="" autoplay="" loop="" playsinline="" preload="none">
-                            <source data-src="assets/images/video/jcru-video.mp4" type="video/mp4">
-                        </video>
-                        <div class="overlay mark"></div>
-                        <div class="overlay bg-effect">
-                            <img loading="lazy" width="1296" height="729" src="assets/images/item/dither-effect.svg"
-                                alt="Image" class="lazy-load">
-                        </div>
-                    </div>
+                <div class="about-main">
                     <div class="content">
                         <div class="top text-display-1 fw-semibold letter-space--3"
                             style="font-size: clamp(60px, 10vw, 180px); line-height: 1;">
                             <p class="effectFade fadeUp">About<br> Jcru Studio<span class="text-primary">_</span></p>
                         </div>
-                        <div class="bottom-content d-flex flex-column flex-xl-row justify-content-between align-items-start align-items-xl-end gap-4"
+                        <div class="bottom-content d-flex flex-column flex-xl-row justify-content-between align-items-start align-items-xl-end gap-5"
                             style="width: 100%;">
                             <h5 class="text-color-change letter-space--2 fw-normal mb-0 w-100"
                                 style="flex: 1; max-width: 600px;">

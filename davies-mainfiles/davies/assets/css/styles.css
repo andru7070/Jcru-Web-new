@@ -5322,46 +5322,15 @@ button.animate-btn::after,
   text-align: end;
 }
 
-.section-about-me-v2 .jcru-video {
-  position: relative;
-  display: flex;
-}
-
-.section-about-me-v2 .jcru-video .video {
-  background-blend-mode: luminosity;
-  min-height: 500px;
-  aspect-ratio: 1.7777777778;
-  filter: grayscale(100%);
-  z-index: 0;
-}
-
-.section-about-me-v2 .jcru-video .overlay {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  pointer-events: none;
-}
-
-.section-about-me-v2 .jcru-video .overlay.mark {
-  background: linear-gradient(270deg, #000 0%, rgba(255, 255, 255, 0) 20%, rgba(255, 255, 255, 0) 80%, #000 100%), linear-gradient(180deg, #000 0%, rgba(255, 255, 255, 0) 20%, rgba(255, 255, 255, 0) 80%, #000 100%);
-}
-
-.section-about-me-v2 .jcru-video .overlay.bg-effect {
-  background: var(--white);
-  mix-blend-mode: color-burn;
-}
-
 .section-about-me-v2 .about-main {
   position: relative;
 }
 
 .section-about-me-v2 .about-main .content {
-  position: absolute;
-  inset: 0;
-  z-index: 2;
+  position: relative;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  gap: clamp(40px, 6vw, 80px);
 }
 
 .section-about-me-v2 .about-main .top {
@@ -6074,6 +6043,10 @@ button.animate-btn::after,
 
 .section-tech-stack {
   padding-top: 60px;
+}
+
+.section-tech-stack-v2 {
+  margin-top: clamp(20px, 4vw, 50px);
 }
 
 .section-tech-stack-v2 .tf-grid-layout {
