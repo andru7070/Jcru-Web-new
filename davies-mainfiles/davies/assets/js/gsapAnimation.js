@@ -751,7 +751,19 @@
         setTimeout(() => {
             const heroVideo = document.getElementById("hero-video");
             if (heroVideo) {
-                heroVideo.play().catch(e => console.log("Video play failed:", e));
+                heroVideo.muted = true;
+                heroVideo.playsInline = true;
+                heroVideo.play().catch(e => {
+                    console.log("Video play failed, trying again on first interaction:", e);
+                    // Fallback to play on first user interaction if blocked
+                    const playOnInteraction = () => {
+                        heroVideo.play();
+                        document.removeEventListener('touchstart', playOnInteraction);
+                        document.removeEventListener('click', playOnInteraction);
+                    };
+                    document.addEventListener('touchstart', playOnInteraction);
+                    document.addEventListener('click', playOnInteraction);
+                });
             }
         }, 200);
     };
