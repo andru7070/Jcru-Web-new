@@ -480,6 +480,7 @@
         hoverYoutubeCards();
         itemFiltering();
         videoModal();
+        imageModal();
         lazyLoader();
     });
 
@@ -608,6 +609,46 @@
         const closeModal = function () {
             $modal.removeClass("show");
             $container.html("");
+            $("body").removeClass("overflow-hidden");
+        };
+
+        $close.on("click", closeModal);
+
+        $modal.on("click", function (e) {
+            if ($(e.target).is($modal)) {
+                closeModal();
+            }
+        });
+
+        $(document).on("keydown", function (e) {
+            if (e.key === "Escape" && $modal.hasClass("show")) {
+                closeModal();
+            }
+        });
+    };
+
+    /* Image Modal
+    -------------------------------------------------------------------------*/
+    var imageModal = function () {
+        const $modal = $("#imageModal");
+        const $container = $("#imageContainer");
+        const $close = $("#closeImageModal");
+
+        $(document).on("click", ".article-blog[data-image-popup]", function () {
+            const imageUrl = $(this).data("image-popup");
+            if (imageUrl) {
+                const imgHtml = `<img src="${imageUrl}" alt="Popup Image">`;
+                $container.html(imgHtml);
+                $modal.addClass("show");
+                $("body").addClass("overflow-hidden");
+            }
+        });
+
+        const closeModal = function () {
+            $modal.removeClass("show");
+            setTimeout(() => {
+                $container.html("");
+            }, 400);
             $("body").removeClass("overflow-hidden");
         };
 
