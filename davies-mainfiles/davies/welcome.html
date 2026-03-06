@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US" lang="en-US">
+
+<head>
+    <meta charset="utf-8">
+    <title>Team Workspace | Jcru Studio</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!-- font -->
+    <link rel="stylesheet" href="assets/fonts/fonts.css">
+    <link rel="stylesheet" href="assets/icon/icomoon/style.css">
+    <!-- css -->
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/styles.css">
+
+    <style>
+        :root {
+            --workspace-bg: #0f0f0f;
+            --sidebar-bg: #161616;
+            --border-color: rgba(255, 255, 255, 0.1);
+            --text-muted: rgba(255, 255, 255, 0.6);
+            --accent-blue: #1b0ee7;
+            --card-bg: rgba(255, 255, 255, 0.05);
+        }
+
+        body.workspace-theme {
+            background-color: var(--workspace-bg);
+            color: #fff;
+            font-family: 'Figtree', sans-serif;
+            overflow: hidden;
+        }
+
+        /* --- Login Overlay --- */
+        #loginOverlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 10000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(10px);
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+
+        .admin-only {
+            display: none !important;
+        }
+
+        body.is-superuser .admin-only {
+            display: inline-flex !important;
+        }
+
+        #loginOverlay.hidden {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        .login-card {
+            background: var(--sidebar-bg);
+            border: 1px solid var(--border-color);
+            padding: 40px;
+            border-radius: 24px;
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+        }
+
+        .login-card img {
+            max-height: 50px;
+            margin-bottom: 30px;
+        }
+
+        .login-card h3 {
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .login-card p {
+            color: var(--text-muted);
+            font-size: 14px;
+            margin-bottom: 30px;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .input-group label {
+            display: block;
+            font-size: 12px;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+        }
+
+        .input-group input {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 12px 16px;
+            color: #fff;
+            transition: border-color 0.3s ease;
+        }
+
+        .input-group input:focus {
+            border-color: var(--accent-blue);
+            outline: none;
+        }
+
+        .btn-login {
+            width: 100%;
+            background: var(--accent-blue);
+            color: white;
+            border: none;
+            padding: 14px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: transform 0.2s ease;
+        }
+
+        .btn-login:active {
+            transform: scale(0.98);
+        }
+
+        /* --- Sidebar --- */
+        .workspace-wrapper {
+            display: flex;
+            height: 100vh;
+            width: 100vw;
+        }
+
+        .sidebar {
+            width: 260px;
+            background: var(--sidebar-bg);
+            border-right: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+            flex-shrink: 0;
+        }
+
+        .sidebar-logo {
+            padding: 10px;
+            margin-bottom: 30px;
+        }
+
+        .sidebar-nav {
+            flex-grow: 1;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            padding: 12px 15px;
+            color: var(--text-muted);
+            border-radius: 10px;
+            margin-bottom: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .nav-item:hover,
+        .nav-item.active {
+            background: rgba(255, 255, 255, 0.05);
+            color: #fff;
+        }
+
+        .nav-item i {
+            margin-right: 15px;
+            font-size: 18px;
+        }
+
+        /* --- Main Content --- */
+        .main-content {
+            flex-grow: 1;
+            overflow-y: auto;
+            padding: 60px;
+            background-color: var(--workspace-bg);
+        }
+
+        .content-section {
+            display: none;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .content-section.active {
+            display: block;
+            animation: fadeIn 0.4s ease forwards;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .section-header {
+            margin-bottom: 40px;
+        }
+
+        .section-header h1 {
+            font-size: 40px;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        /* --- Team Roster --- */
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+        }
+
+        .team-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            transition: transform 0.3s ease, background 0.3s ease;
+        }
+
+        .team-card:hover {
+            background: rgba(255, 255, 255, 0.08);
+            transform: translateY(-5px);
+        }
+
+        .team-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: var(--accent-blue);
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            font-weight: 700;
+            color: white;
+            text-transform: uppercase;
+        }
+
+        .team-info h5 {
+            margin-bottom: 5px;
+            font-size: 18px;
+        }
+
+        .team-info p {
+            color: var(--accent-blue);
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 15px;
+        }
+
+        .team-status {
+            display: inline-block;
+            padding: 4px 12px;
+            background: rgba(0, 191, 67, 0.1);
+            color: #00BF43;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* --- Project Dashboard --- */
+        .project-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0 10px;
+        }
+
+        .project-table th {
+            color: var(--text-muted);
+            font-weight: 600;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 15px 20px;
+        }
+
+        .project-row {
+            background: var(--card-bg);
+            transition: background 0.3s ease;
+        }
+
+        .project-row:hover {
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .project-row td {
+            padding: 20px;
+            border-top: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .project-row td:first-child {
+            border-left: 1px solid var(--border-color);
+            border-top-left-radius: 12px;
+            border-bottom-left-radius: 12px;
+        }
+
+        .project-row td:last-child {
+            border-right: 1px solid var(--border-color);
+            border-top-right-radius: 12px;
+            border-bottom-right-radius: 12px;
+        }
+
+        .status-pill {
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .status-active {
+            background: rgba(54, 248, 199, 0.1);
+            color: #2ac6f8;
+        }
+
+        .status-pending {
+            background: rgba(248, 199, 54, 0.1);
+            color: #f8c736;
+        }
+
+        .status-review {
+            background: rgba(245, 119, 46, 0.1);
+            color: #f5772e;
+        }
+
+        .task-list {
+            margin-top: 10px;
+            font-size: 13px;
+        }
+
+        .task-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 6px;
+            color: var(--text-muted);
+        }
+
+        .task-item .badge {
+            font-weight: 500;
+            font-size: 10px;
+            letter-spacing: 0.5px;
+            padding: 4px 8px;
+            border-radius: 4px;
+        }
+
+        /* --- Calendar --- */
+        .calendar-view {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 24px;
+            overflow: hidden;
+        }
+
+        .cal-header {
+            padding: 25px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .cal-day-cell {
+            padding: 25px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            gap: 20px;
+        }
+
+        .cal-date {
+            width: 60px;
+            text-align: center;
+        }
+
+        .cal-date .day-num {
+            font-size: 24px;
+            font-weight: 700;
+            display: block;
+        }
+
+        .cal-date .day-name {
+            font-size: 12px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+        }
+
+        .cal-events {
+            flex-grow: 1;
+        }
+
+        .event-item {
+            background: rgba(255, 255, 255, 0.03);
+            border-left: 4px solid var(--accent-blue);
+            padding: 15px 20px;
+            border-radius: 0 12px 12px 0;
+            margin-bottom: 10px;
+        }
+
+        .event-time {
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-bottom: 5px;
+        }
+
+        .event-title {
+            font-weight: 600;
+            font-size: 16px;
+        }
+    </style>
+</head>
+
+<body class="workspace-theme counter-scroll">
+    <canvas class="cursor-trail d-none d-xl-block" id="trail"></canvas>
+
+    <!-- Preload -->
+    <div class="preloader">
+        <div class="site-name"
+            style="position: absolute; left: 5vw; top: 50%; transform: translateY(-50%); width: 90vw; text-align: left; z-index: 10; background: transparent; display: flex; align-items: center;">
+            <h2 class="letter-space--3"
+                style="font-size: 5.5vw; line-height: 1.1; color: #ffffff; margin: 0; padding: 0;">Workspace Loading
+            </h2>
+        </div>
+        <div class="preloader-gutters">
+            <div class="bar">
+                <div class="inner-bar"></div>
+            </div>
+            <div class="bar">
+                <div class="inner-bar"></div>
+            </div>
+            <div class="bar">
+                <div class="inner-bar"></div>
+            </div>
+            <div class="bar">
+                <div class="inner-bar"></div>
+            </div>
+            <div class="bar">
+                <div class="inner-bar"></div>
+            </div>
+            <div class="bar">
+                <div class="inner-bar"></div>
+            </div>
+            <div class="bar">
+                <div class="inner-bar"></div>
+            </div>
+            <div class="bar">
+                <div class="inner-bar"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Login Overlay -->
+    <div id="loginOverlay">
+        <div class="login-card">
+            <img src="assets/images/logo/jcru-logo.png" alt="Jcru Studio">
+            <h3>Staff Login</h3>
+            <p>Enter your credentials to access the team workspace.<br><small style="opacity: 0.5;">(Ref: Workspace_Credentials.csv)</small></p>
+            <form id="loginForm">
+                <div class="input-group">
+                    <label>Email Address</label>
+                    <input type="email" id="email" placeholder="name@jcru.in" required>
+                </div>
+                <div class="input-group">
+                    <label>Password</label>
+                    <input type="password" id="password" placeholder="••••••••" required>
+                </div>
+                <button type="submit" class="btn-login" id="loginSubmit">Login to Workspace</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="workspace-wrapper">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="sidebar-logo">
+                <img src="assets/images/logo/jcru-logo.png" alt="Jcru Studio" style="max-height: 30px;">
+            </div>
+            <div class="sidebar-nav">
+                <div class="nav-item active" data-target="projects">
+                    <i class="icon-file-text"></i> 📁 Projects
+                </div>
+                <div class="nav-item admin-only" data-target="team">
+                    <i class="icon-users"></i> 👥 Team Roster
+                </div>
+                <div class="nav-item admin-only" data-target="calendar">
+                    <i class="icon-calendar"></i> 🗓️ Office Calendar
+                </div>
+            </div>
+            <div class="sidebar-footer">
+                <div class="nav-item" id="logoutBtn">
+                    <i class="icon-log-out"></i> 🔓 Logout
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <main class="main-content">
+
+            <div class="workspace-header mb-4">
+                <div class="breadcrumbs text-white-32 fs-12 mb-2">🏠 Home / 📁 Workspace</div>
+                <div class="last-edited text-white-16 fs-10">Last edited 2 minutes ago</div>
+            </div>
+
+            <!-- Projects Section -->
+            <section id="projects" class="content-section active">
+                <div class="section-header">
+                    <h1>🎬 Project Dashboard</h1>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <p class="text-white-64 mb-0">Manage active video productions and task assignments.</p>
+                        <button class="btn-login admin-only" style="width: auto; padding: 10px 20px; margin: 0; font-size: 14px;">
+                            <i class="icon-plus"></i> + Create New Task
+                        </button>
+                    </div>
+                </div>
+
+                <div class="table-responsive">
+                    <table class="project-table">
+                        <thead>
+                            <tr>
+                                <th>Project Name & Tasks</th>
+                                <th>Client</th>
+                                <th>Status</th>
+                                <th>Assigned Team</th>
+                                <th>Deadline</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="project-row">
+                                <td>
+                                    <strong>Brand Film: TechSpark 2026</strong>
+                                    <div class="task-list">
+                                        <div class="task-item">✅ Script Finalization - <span
+                                                class="badge bg-secondary">Rahul</span></div>
+                                        <div class="task-item">⏳ Day 1 Shoot - <span
+                                                class="badge bg-primary">Sneha</span></div>
+                                        <div class="task-item">⭕ Motion Graphics - <span
+                                                class="badge bg-dark">Amal</span></div>
+                                    </div>
+                                </td>
+                                <td>Dell Spark</td>
+                                <td><span class="status-pill status-active">Production</span></td>
+                                <td>Rahul, Sneha, Amal</td>
+                                <td>Mar 25, 2026</td>
+                            </tr>
+                            <tr class="project-row">
+                                <td>
+                                    <strong>Explainer Video: AI Workflow</strong>
+                                    <div class="task-list">
+                                        <div class="task-item">✅ Voiceover Recording - <span
+                                                class="badge bg-secondary">Karthik</span></div>
+                                        <div class="task-item">⏳ Animation Rendering - <span
+                                                class="badge bg-primary">Amal</span></div>
+                                        <div class="task-item">⭕ Background Score - <span
+                                                class="badge bg-dark">Priya</span></div>
+                                    </div>
+                                </td>
+                                <td>Uniphore</td>
+                                <td><span class="status-pill status-review">Review</span></td>
+                                <td>Karthik, Amal, Priya</td>
+                                <td>Mar 15, 2026</td>
+                            </tr>
+                            <tr class="project-row">
+                                <td>
+                                    <strong>Event AV: Annual Summit</strong>
+                                    <div class="task-list">
+                                        <div class="task-item">⏳ Footage Selection - <span
+                                                class="badge bg-primary">Deepa</span></div>
+                                        <div class="task-item">⭕ Color Grading - <span
+                                                class="badge bg-dark">Rahul</span></div>
+                                    </div>
+                                </td>
+                                <td>Infosys</td>
+                                <td><span class="status-pill status-pending">Pre-Production</span></td>
+                                <td>Rahul, Deepa</td>
+                                <td>Apr 05, 2026</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Team Section -->
+            <section id="team" class="content-section admin-only">
+                <div class="section-header">
+                    <h1>👥 Team Roster</h1>
+                    <p class="text-white-64">Meet the creative minds at Jcru Studio.</p>
+                </div>
+
+                <div class="team-grid">
+                    <div class="team-card">
+                        <div class="team-avatar">RK</div>
+                        <div class="team-info">
+                            <h5>Rahul Kumar</h5>
+                            <p>Senior Video Editor</p>
+                            <span class="team-status">Online</span>
+                        </div>
+                    </div>
+                    <div class="team-card">
+                        <div class="team-avatar" style="background: #f8c736;">SK</div>
+                        <div class="team-info">
+                            <h5>Sneha Kapoor</h5>
+                            <p>Cinematographer</p>
+                            <span class="team-status" style="background: rgba(245, 119, 46, 0.1); color: #f5772e;">On
+                                Shoot</span>
+                        </div>
+                    </div>
+                    <div class="team-card">
+                        <div class="team-avatar" style="background: #f5772e;">AB</div>
+                        <div class="team-info">
+                            <h5>Amal Benny</h5>
+                            <p>Motion Designer</p>
+                            <span class="team-status">Active</span>
+                        </div>
+                    </div>
+                    <div class="team-card">
+                        <div class="team-avatar" style="background: #2ac6f8;">KP</div>
+                        <div class="team-info">
+                            <h5>Karthik P.</h5>
+                            <p>Creative Director</p>
+                            <span class="team-status">Meeting</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Calendar Section -->
+            <section id="calendar" class="content-section admin-only">
+                <div class="section-header">
+                    <h1>Office Calendar</h1>
+                    <p class="text-white-64">Daily schedules and shoot locations.</p>
+                </div>
+
+                <div class="calendar-view">
+                    <div class="cal-header">
+                        <h3>March 2026</h3>
+                        <div class="cal-nav">
+                            <!-- Placeholder nav -->
+                        </div>
+                    </div>
+
+                    <div class="cal-day-cell">
+                        <div class="cal-date">
+                            <span class="day-num">06</span>
+                            <span class="day-name">Fri</span>
+                        </div>
+                        <div class="cal-events">
+                            <div class="event-item">
+                                <div class="event-time">09:00 AM - 06:00 PM</div>
+                                <div class="event-title">Indoor Shoot: Dell Product Showcase</div>
+                                <div class="text-white-64 fs-12 mt-1">Expected: Full production kit ready by 8:30 AM.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="cal-day-cell">
+                        <div class="cal-date">
+                            <span class="day-num">07</span>
+                            <span class="day-name">Sat</span>
+                        </div>
+                        <div class="cal-events">
+                            <div class="event-item" style="border-left-color: #f8c736;">
+                                <div class="event-time">11:00 AM - 01:00 PM</div>
+                                <div class="event-title">Team Brainstorming Session</div>
+                                <div class="text-white-64 fs-12 mt-1">Topic: AI in Motion Graphics. All creative team
+                                    members.</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="cal-day-cell">
+                        <div class="cal-date">
+                            <span class="day-num">09</span>
+                            <span class="day-name">Mon</span>
+                        </div>
+                        <div class="cal-events">
+                            <div class="event-item" style="border-left-color: #f14444;">
+                                <div class="event-time">All Day</div>
+                                <div class="event-title">Office Maintenance</div>
+                                <div class="text-white-64 fs-12 mt-1">Expected: Work from home for all editing staff.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- Scripts -->
+    <script src="assets/js/bootstrap.min.js"></script>
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/swiper-bundle.min.js"></script>
+    <script src="assets/js/carousel.js"></script>
+    <script src="assets/js/infinityslide.js"></script>
+    <script src="assets/js/ScrollSmooth.js"></script>
+    <script src="assets/js/gsap.min.js"></script>
+    <script src="assets/js/gsapAnimation.js"></script>
+    <script src="assets/js/SplitText.min.js"></script>
+    <script src="assets/js/ScrollTrigger.min.js"></script>
+    <script src="assets/js/odometer.min.js"></script>
+    <script src="assets/js/jquery.nice-select.min.js"></script>
+    <script src="assets/js/main.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            // Login Logic
+            $('#loginForm').on('submit', function (e) {
+                e.preventDefault();
+                const emailInput = $('#email').val().toLowerCase().trim();
+                const passInput = $('#password').val();
+                const $btn = $('#loginSubmit');
+
+                if (!emailInput || !passInput) {
+                    alert('Please enter both email and password.');
+                    return;
+                }
+
+                $btn.text('Authenticating...').prop('disabled', true);
+
+                // Fetch data directly from the CSV file
+                fetch('Workspace_Credentials.csv', { cache: 'no-store' })
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Could not find Workspace_Credentials.csv. Status: ' + response.status);
+                        }
+                        return response.text();
+                    })
+                    .then(csvData => {
+                        // Split by lines and remove empty ones
+                        const lines = csvData.split(/\r?\n/).filter(line => line.trim() !== "");
+                        let authenticatedUser = null;
+
+                        // Skip header (i=0), parse each line
+                        for (let i = 1; i < lines.length; i++) {
+                            const line = lines[i];
+                            
+                            // More robust CSV parsing to handle quotes/commas
+                            // Simple CSV splitting doesn't work well with quoted commas
+                            // But for this case, we just need the 4th and 5th columns
+                            const columns = line.match(/(".*?"|[^",\s]+)(?=\s*,|\s*$)/g) || line.split(',');
+                            
+                            if (columns.length < 5) continue;
+
+                            // Remove quotes if present
+                            const getVal = (idx) => columns[idx].replace(/^"|"$/g, '').trim();
+
+                            const section = getVal(0).toLowerCase();
+                            const email = getVal(3).toLowerCase();
+                            const password = getVal(4);
+
+                            if (email === emailInput && password === passInput) {
+                                authenticatedUser = {
+                                    email: email,
+                                    role: section.includes('super') ? 'superuser' : 'employee'
+                                };
+                                break;
+                            }
+                        }
+
+                        if (authenticatedUser) {
+                            setTimeout(() => {
+                                $('#loginOverlay').addClass('hidden');
+                                localStorage.setItem('jcru_logged_in', 'true');
+                                localStorage.setItem('jcru_user_role', authenticatedUser.role);
+                                
+                                if (authenticatedUser.role === 'superuser') {
+                                    $('body').addClass('is-superuser');
+                                } else {
+                                    $('body').removeClass('is-superuser');
+                                }
+                                $btn.text('Login to Workspace').prop('disabled', false);
+                            }, 500);
+                        } else {
+                            alert('Invalid credentials. Access denied.\nNote: Passwords are case-sensitive.');
+                            $btn.text('Login to Workspace').prop('disabled', false);
+                        }
+                    })
+                    .catch(err => {
+                        console.error('Login Error:', err);
+                        alert('System Error: ' + err.message + '\n\nIf you are opening this file directly (file://), please use a local server (like Live Server) for CSV authentication to work.');
+                        $btn.text('Login to Workspace').prop('disabled', false);
+                    });
+            });
+
+            // Navigation Logic
+            $('.nav-item[data-target]').on('click', function () {
+                const target = $(this).data('target');
+
+                $('.nav-item').removeClass('active');
+                $(this).addClass('active');
+
+                $('.content-section').removeClass('active');
+                $('#' + target).addClass('active');
+            });
+
+            // Logout
+            $('#logoutBtn').on('click', function () {
+                localStorage.removeItem('jcru_logged_in');
+                localStorage.removeItem('jcru_user_role');
+                location.reload();
+            });
+
+            // Persistent Login and Role check
+            if (localStorage.getItem('jcru_logged_in') === 'true') {
+                $('#loginOverlay').hide();
+                if (localStorage.getItem('jcru_user_role') === 'superuser') {
+                    $('body').addClass('is-superuser');
+                }
+            }
+        });
+    </script>
+
+</body>
+
+</html>
