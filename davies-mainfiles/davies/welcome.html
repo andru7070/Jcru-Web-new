@@ -545,56 +545,8 @@
                                 <th>Deadline</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            <tr class="project-row">
-                                <td>
-                                    <strong>Brand Film: TechSpark 2026</strong>
-                                    <div class="task-list">
-                                        <div class="task-item">✅ Script Finalization - <span
-                                                class="badge bg-secondary">Rahul</span></div>
-                                        <div class="task-item">⏳ Day 1 Shoot - <span
-                                                class="badge bg-primary">Sneha</span></div>
-                                        <div class="task-item">⭕ Motion Graphics - <span
-                                                class="badge bg-dark">Amal</span></div>
-                                    </div>
-                                </td>
-                                <td>Dell Spark</td>
-                                <td><span class="status-pill status-active">Production</span></td>
-                                <td>Rahul, Sneha, Amal</td>
-                                <td>Mar 25, 2026</td>
-                            </tr>
-                            <tr class="project-row">
-                                <td>
-                                    <strong>Explainer Video: AI Workflow</strong>
-                                    <div class="task-list">
-                                        <div class="task-item">✅ Voiceover Recording - <span
-                                                class="badge bg-secondary">Karthik</span></div>
-                                        <div class="task-item">⏳ Animation Rendering - <span
-                                                class="badge bg-primary">Amal</span></div>
-                                        <div class="task-item">⭕ Background Score - <span
-                                                class="badge bg-dark">Priya</span></div>
-                                    </div>
-                                </td>
-                                <td>Uniphore</td>
-                                <td><span class="status-pill status-review">Review</span></td>
-                                <td>Karthik, Amal, Priya</td>
-                                <td>Mar 15, 2026</td>
-                            </tr>
-                            <tr class="project-row">
-                                <td>
-                                    <strong>Event AV: Annual Summit</strong>
-                                    <div class="task-list">
-                                        <div class="task-item">⏳ Footage Selection - <span
-                                                class="badge bg-primary">Deepa</span></div>
-                                        <div class="task-item">⭕ Color Grading - <span
-                                                class="badge bg-dark">Rahul</span></div>
-                                    </div>
-                                </td>
-                                <td>Infosys</td>
-                                <td><span class="status-pill status-pending">Pre-Production</span></td>
-                                <td>Rahul, Deepa</td>
-                                <td>Apr 05, 2026</td>
-                            </tr>
+                        <tbody id="projectTableBody">
+                            <!-- Dynamically populated from Production_Details.csv -->
                         </tbody>
                     </table>
                 </div>
@@ -830,6 +782,62 @@
                 if (localStorage.getItem('jcru_user_role') === 'superuser') {
                     $('body').addClass('is-superuser');
                 }
+                loadProductionDetails();
+            }
+
+            function loadProductionDetails() {
+                fetch('Production_Details.csv', { cache: 'no-store' })
+                    .then(response => response.ok ? response.text() : '')
+                    .then(csvData => {
+                        if (!csvData) return;
+                        
+                        const lines = csvData.split(/\r?\n/).filter(line => line.trim() !== "");
+                        const $container = $('#projectTableBody');
+                        $container.empty();
+
+                        for (let i = 1; i < lines.length; i++) {
+                            const line = lines[i];
+                            const columns = line.match(/(".*?"|[^",\s]+)(?=\s*,|\s*$)/g);
+                            if (!columns || columns.length < 5) continue;
+
+                            const getVal = (idx) => columns[idx] ? columns[idx].replace(/^"|"$/g, '').trim() : '';
+
+                            const name = getVal(0);
+                            const tasksRaw = getVal(1);
+                            const client = getVal(2);
+                            const status = getVal(3);
+                            const team = getVal(4);
+                            const deadline = getVal(5);
+
+                            let statusClass = 'status-pending';
+                            if (status.toLowerCase().includes('production')) statusClass = 'status-active';
+                            if (status.toLowerCase().includes('review')) statusClass = 'status-review';
+
+                            // Parse tasks (e.g., "✅ Task [Name]; ⏳ Task [Name]")
+                            const tasksHtml = tasksRaw.split(';').map(t => {
+                                if (!t.trim()) return '';
+                                const parts = t.trim().split('[');
+                                const taskName = parts[0].trim();
+                                const person = parts[1] ? parts[1].replace(']', '') : '';
+                                return `<div class="task-item">${taskName} - <span class="badge bg-secondary">${person}</span></div>`;
+                            }).join('');
+
+                            const row = `
+                                <tr class="project-row">
+                                    <td>
+                                        <strong>${name}</strong>
+                                        <div class="task-list">${tasksHtml}</div>
+                                    </td>
+                                    <td>${client}</td>
+                                    <td><span class="status-pill ${statusClass}">${status}</span></td>
+                                    <td>${team}</td>
+                                    <td>${deadline}</td>
+                                </tr>
+                            `;
+                            $container.append(row);
+                        }
+                    })
+                    .catch(err => console.error('Error loading production details:', err));
             }
         });
     </script>
