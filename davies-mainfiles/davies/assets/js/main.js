@@ -637,8 +637,17 @@
         $(document).on("click", ".article-blog[data-image-popup]", function () {
             const imageUrl = $(this).data("image-popup");
             if (imageUrl) {
-                const imgHtml = `<img src="${imageUrl}" alt="Popup Image">`;
-                $container.html(imgHtml);
+                const imgHtml = `<img src="${imageUrl}" alt="Popup Image" style="width: 100%; opacity: 0; transition: opacity 0.4s ease;">`;
+                const $img = $(imgHtml);
+                $container.html($img);
+                
+                $img.on('load', function() {
+                    $(this).css({
+                        'max-width': this.naturalWidth + 'px',
+                        'opacity': 1
+                    });
+                });
+
                 $modal.addClass("show");
                 $("body").addClass("overflow-hidden");
             }

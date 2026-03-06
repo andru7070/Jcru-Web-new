@@ -8611,8 +8611,18 @@ button.animate-btn::after,
 
 .image-modal-content img {
   width: 100%;
+  max-width: 100%;
   height: auto;
   display: block;
+  margin: 0 auto;
+}
+
+#imageContainer {
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  max-width: 100%;
+  margin: 0 auto;
 }
 
 .image-modal-close {
