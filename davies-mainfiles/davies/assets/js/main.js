@@ -500,15 +500,7 @@
                     const toShow = [];
                     const toHide = [];
 
-                    const excludedFromAll = ["campaign-reels", "social-media-reels", "post-event-reels"];
-
                     $(".filter-grid-item").each(function () {
-                        const category = $(this).attr("data-category");
-                        if (excludedFromAll.includes(category)) {
-                            toHide.push(this);
-                            return;
-                        }
-
                         const id = $(this).attr("data-youtube-id");
                         if (id) {
                             if (seenIds.has(id)) {
