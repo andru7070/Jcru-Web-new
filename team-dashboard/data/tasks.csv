@@ -1,0 +1,5 @@
+task_id,project_id,task_name,assigned_to,status,deadline
+T001,P001,Script Draft,Rahul,Completed,2026-04-02
+T002,P001,Shotlist,Cristin,Completed,2026-04-04
+T003,P001,Rough Cut,Arjun,In Progress,2026-04-12
+T004,P001,Sound Design,Dev,Pending,2026-04-15

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jcru Studio | Dashboard</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Lucide Icons for premium feel -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="style.css">
+    <script src="auth.js"></script>
+</head>
+<body>
+
+    <aside class="sidebar">
+        <h2>JCRU</h2>
+        <nav>
+            <a href="#" class="nav-link active" data-page="dashboard">
+                <i data-lucide="layout-dashboard"></i>
+                <span style="margin-left: 10px;">Dashboard</span>
+            </a>
+            <a href="#" class="nav-link" data-page="projects">
+                <i data-lucide="clapperboard"></i>
+                <span style="margin-left: 10px;">Projects</span>
+            </a>
+            <a href="#" class="nav-link" data-page="tasks">
+                <i data-lucide="check-square"></i>
+                <span style="margin-left: 10px;">Tasks</span>
+            </a>
+            <a href="#" class="nav-link" data-page="team">
+                <i data-lucide="users"></i>
+                <span style="margin-left: 10px;">Team</span>
+            </a>
+            <a href="#" class="nav-link" data-page="files">
+                <i data-lucide="folder-open"></i>
+                <span style="margin-left: 10px;">Files</span>
+            </a>
+            <a href="#" class="nav-link" data-page="payments">
+                <i data-lucide="credit-card"></i>
+                <span style="margin-left: 10px;">Payments</span>
+            </a>
+        </nav>
+
+        <div class="sidebar-footer">
+            <a href="#" onclick="logout()" style="color: var(--primary);">
+                <i data-lucide="log-out"></i>
+                <span style="margin-left: 10px;">Logout</span>
+            </a>
+        </div>
+    </aside>
+
+    <main class="main-content">
+        <header class="header">
+            <h1 id="page-title">Dashboard</h1>
+            <div class="user-profile">
+                <div class="avatar" id="user-avatar">?</div>
+                <div class="user-info">
+                    <div style="font-size: 0.9rem; font-weight: 600;" id="user-name">Loading...</div>
+                    <div style="font-size: 0.75rem; color: var(--text-dim);" id="user-role">...</div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Dynamic Content Loader -->
+        <div id="app-view">
+            <!-- Content will be injected by app.js -->
+            <div style="text-align: center; padding: 100px;">
+                <p style="color: var(--text-dim);">Initialization...</p>
+            </div>
+        </div>
+
+        <!-- Hidden Project Details Modal/Overlay (Optional enhancement) -->
+        <div id="project-detail-view" style="display: none;">
+            <button onclick="router.loadPage('projects')" class="btn-primary" style="margin-bottom: 20px; width: auto; padding: 8px 16px;">← Back to Projects</button>
+            <div id="project-detail-content"></div>
+        </div>
+    </main>
+
+    <script src="app.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jcru Studio | Team Login</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script src="auth.js" defer></script>
+</head>
+<body>
+
+    <div class="login-container">
+        <div class="login-box">
+            <span class="logo">JCRU</span>
+            <h2>Studio Team Login</h2>
+            
+            <div class="stats-grid" style="grid-template-columns: 1fr; margin-bottom: 20px;">
+                <p style="color: var(--text-dim); font-size: 0.9rem;">Internal access only for approved collaborators.</p>
+            </div>
+
+            <div class="input-group">
+                <label for="email">Work Email</label>
+                <input type="email" id="email" placeholder="name@jcru.in" required onkeypress="if(event.key === 'Enter') login()">
+            </div>
+
+            <button class="btn-primary" onclick="login()">Enter Dashboard</button>
+
+            <p id="error"></p>
+            
+            <div style="margin-top: 30px; border-top: 1px solid var(--border); padding-top: 20px;">
+                <p style="font-size: 0.8rem; color: var(--text-dim);">© 2026 Jcru Studio. All rights reserved.</p>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
