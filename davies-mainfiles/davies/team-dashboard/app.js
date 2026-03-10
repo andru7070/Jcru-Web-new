@@ -50,6 +50,22 @@ const UI = {
         const tasksDue = Store.tasks.filter(t => t.status !== 'Completed').length;
         const editing = Store.projects.filter(p => p.status === 'Editing').length;
         
+        let adminCards = '';
+        if (currentUser.role === 'admin') {
+            adminCards = `
+                <div class="stat-card admin-only-card" onclick="router.loadPage('manage-users')" style="cursor: pointer;">
+                    <span class="label">System Users</span>
+                    <div class="value">${Store.users.length}</div>
+                    <p style="font-size: 0.8rem; color: var(--primary); margin-top: 10px;">Manage Permissions →</p>
+                </div>
+                <div class="stat-card admin-only-card" onclick="router.loadPage('manage-tasks')" style="cursor: pointer;">
+                    <span class="label">Total Tasks</span>
+                    <div class="value">${Store.tasks.length}</div>
+                    <p style="font-size: 0.8rem; color: var(--primary); margin-top: 10px;">Assign & Edit Tasks →</p>
+                </div>
+            `;
+        }
+
         return `
             <div class="stats-grid">
                 <div class="stat-card">
@@ -64,10 +80,7 @@ const UI = {
                     <span class="label">In Editing</span>
                     <div class="value">${editing}</div>
                 </div>
-                <div class="stat-card">
-                    <span class="label">Team Online</span>
-                    <div class="value">${Store.users.length}</div>
-                </div>
+                ${adminCards}
             </div>
             
             <div class="content-card">
@@ -248,6 +261,155 @@ const UI = {
                 </table>
             </div>
         `;
+    },
+
+    // Admin Specific Rendering
+    renderManageUsers() {
+        return `
+            <div class="action-bar">
+                <h3>User Management</h3>
+                <button class="btn-primary" onclick="UI.openUserModal()" style="width: auto; padding: 10px 20px;">+ Add New User</button>
+            </div>
+            <div class="content-card">
+                <table>
+                    <thead>
+                        <tr><th>Name</th><th>Email</th><th>Role</th><th>Actions</th></tr>
+                    </thead>
+                    <tbody>
+                        ${Store.users.map(u => `
+                            <tr>
+                                <td><strong>${u.name}</strong></td>
+                                <td>${u.email}</td>
+                                <td><span class="admin-badge" style="background: ${u.role === 'admin' ? 'rgba(248,45,77,0.2)' : 'rgba(255,255,255,0.1)'}">${u.role}</span></td>
+                                <td>
+                                    <button class="btn-sm btn-success" onclick="UI.editUser('${u.email}')">Edit</button>
+                                    <button class="btn-sm btn-danger" onclick="UI.deleteUser('${u.email}')">Remove</button>
+                                </td>
+                            </tr>
+                        `).join('')}
+                    </tbody>
+                </table>
+            </div>
+            <div style="text-align: right; margin-top: 10px;">
+                <p style="color: var(--text-dim); font-size: 0.8rem;">Note: Changes are local to session. Use "Push Changes" to save to Git.</p>
+            </div>
+        `;
+    },
+
+    renderManageTasks() {
+        return `
+            <div class="action-bar">
+                <h3>Task Manager (Admin)</h3>
+                <button class="btn-primary" onclick="UI.openTaskModal()" style="width: auto; padding: 10px 20px;">+ Create Task</button>
+            </div>
+            <div class="content-card">
+                <table>
+                    <thead>
+                        <tr><th>Task</th><th>Project</th><th>Assigned To</th><th>Deadline</th><th>Status</th><th>Actions</th></tr>
+                    </thead>
+                    <tbody>
+                        ${Store.tasks.map(t => `
+                            <tr>
+                                <td><strong>${t.task_name}</strong></td>
+                                <td>${t.project_id}</td>
+                                <td>${t.assigned_to}</td>
+                                <td>${t.deadline}</td>
+                                <td><span class="status-badge status-${t.status.toLowerCase().replace(' ', '')}">${t.status}</span></td>
+                                <td>
+                                    <button class="btn-sm btn-success" onclick="UI.editTask('${t.task_id}')">Edit</button>
+                                    <button class="btn-sm btn-danger" onclick="UI.deleteTask('${t.task_id}')">Delete</button>
+                                </td>
+                            </tr>
+                        `).join('')}
+                    </tbody>
+                </table>
+            </div>
+        `;
+    },
+
+    // Modal Logic
+    openUserModal(userEmail = null) {
+        const modal = document.getElementById("admin-modal");
+        const title = document.getElementById("modal-title");
+        const fields = document.getElementById("modal-fields");
+        const user = userEmail ? Store.users.find(u => u.email === userEmail) : null;
+
+        title.innerText = user ? "Edit User" : "Add New User";
+        fields.innerHTML = `
+            <div class="form-group">
+                <label>Full Name</label>
+                <input type="text" id="form-name" class="form-control" value="${user?.name || ''}" placeholder="John Doe">
+            </div>
+            <div class="form-group">
+                <label>Email</label>
+                <input type="email" id="form-email" class="form-control" value="${user?.email || ''}" placeholder="john@jcru.in">
+            </div>
+            <div class="form-group">
+                <label>Role</label>
+                <select id="form-role" class="form-control">
+                    <option value="admin" ${user?.role === 'admin' ? 'selected' : ''}>Admin</option>
+                    <option value="editor" ${user?.role === 'editor' ? 'selected' : ''}>Editor</option>
+                    <option value="dop" ${user?.role === 'dop' ? 'selected' : ''}>DOP</option>
+                    <option value="sound" ${user?.role === 'sound' ? 'selected' : ''}>Sound</option>
+                    <option value="motion" ${user?.role === 'motion' ? 'selected' : ''}>Motion</option>
+                </select>
+            </div>
+        `;
+        modal.style.display = "flex";
+        lucide.createIcons();
+    },
+
+    closeModal() {
+        document.getElementById("admin-modal").style.display = "none";
+    },
+
+    editUser(email) {
+        this.openUserModal(email);
+    },
+
+    async deleteUser(email) {
+        if (confirm(`Are you sure you want to remove ${email}?`)) {
+            alert("To persist this change, please ask Antigravity to update the users.csv file with the removal.");
+        }
+    },
+
+    openTaskModal(taskId = null) {
+        const modal = document.getElementById("admin-modal");
+        const title = document.getElementById("modal-title");
+        const fields = document.getElementById("modal-fields");
+        const task = taskId ? Store.tasks.find(t => t.task_id === taskId) : null;
+
+        title.innerText = task ? "Edit Task" : "Create New Task";
+        fields.innerHTML = `
+            <div class="form-group">
+                <label>Task Name</label>
+                <input type="text" id="task-name" class="form-control" value="${task?.task_name || ''}">
+            </div>
+            <div class="form-group">
+                <label>Project ID</label>
+                <input type="text" id="task-project" class="form-control" value="${task?.project_id || ''}">
+            </div>
+            <div class="form-group">
+                <label>Assigned To</label>
+                <input type="text" id="task-assigned" class="form-control" value="${task?.assigned_to || ''}">
+            </div>
+            <div class="form-group">
+                <label>Deadline</label>
+                <input type="date" id="task-deadline" class="form-control" value="${task?.deadline || ''}">
+            </div>
+        `;
+        modal.style.display = "flex";
+        lucide.createIcons();
+    },
+
+    editTask(id) {
+        this.openTaskModal(id);
+    },
+
+    deleteTask(id) {
+        if (confirm(`Delete task ${id}?`)) {
+            alert("Change requested. Please ask Antigravity to update tasks.csv.");
+        }
     }
 };
 
@@ -274,6 +436,8 @@ const router = {
             case 'team': appView.innerHTML = UI.renderTeam(); break;
             case 'files': appView.innerHTML = UI.renderFiles(); break;
             case 'payments': appView.innerHTML = UI.renderPayments(); break;
+            case 'manage-users': appView.innerHTML = UI.renderManageUsers(); break;
+            case 'manage-tasks': appView.innerHTML = UI.renderManageTasks(); break;
         }
         
         lucide.createIcons();
@@ -300,6 +464,11 @@ const router = {
 document.addEventListener("DOMContentLoaded", async () => {
     const user = currentUser; // From auth.js
     if (!user) return;
+
+    // Show Admin Panel if applicable
+    if (user.role === 'admin') {
+        document.getElementById("admin-nav").style.display = "block";
+    }
 
     // Update User Profile UI
     document.getElementById("user-name").innerText = user.name;

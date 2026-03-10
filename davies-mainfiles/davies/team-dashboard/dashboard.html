@@ -42,6 +42,18 @@
                 <i data-lucide="credit-card"></i>
                 <span style="margin-left: 10px;">Payments</span>
             </a>
+            <!-- Admin Only Section -->
+            <div id="admin-nav" style="display: none; margin-top: 20px; padding-top: 20px; border-top: 1px solid var(--border);">
+                <p style="font-size: 0.7rem; color: var(--text-dim); margin-bottom: 10px; padding-left: 16px;">ADMIN PANEL</p>
+                <a href="#" class="nav-link" data-page="manage-users">
+                    <i data-lucide="user-cog"></i>
+                    <span style="margin-left: 10px;">Manage Users</span>
+                </a>
+                <a href="#" class="nav-link" data-page="manage-tasks">
+                    <i data-lucide="clipboard-list"></i>
+                    <span style="margin-left: 10px;">Manage Tasks</span>
+                </a>
+            </div>
         </nav>
 
         <div class="sidebar-footer">
@@ -78,6 +90,25 @@
             <div id="project-detail-content"></div>
         </div>
     </main>
+
+    <!-- Admin Form Modals -->
+    <div id="admin-modal" class="modal">
+        <div class="modal-content">
+            <div class="header" style="margin-bottom: 20px;">
+                <h2 id="modal-title">Edit Entry</h2>
+                <button onclick="UI.closeModal()" style="background: none; border: none; color: var(--text-dim); cursor: pointer;">
+                    <i data-lucide="x"></i>
+                </button>
+            </div>
+            <form id="admin-form">
+                <div id="modal-fields"></div>
+                <div style="display: flex; gap: 10px; margin-top: 20px;">
+                    <button type="submit" class="btn-primary" style="flex: 1;">Save Changes</button>
+                    <button type="button" onclick="UI.closeModal()" class="btn-danger" style="flex: 1; background: var(--card-bg);">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
 
     <script src="app.js" defer></script>
 </body>
