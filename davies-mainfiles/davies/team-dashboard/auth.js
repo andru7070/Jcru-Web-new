@@ -1,22 +1,14 @@
 /**
- * Jcru Team Dashboard - Auth & Session Logic
+ * Jcru Team Dashboard - Supabase Auth & Session Logic
  */
 
-// CSV Parser Helper
-function parseCSV(text) {
-    const lines = text.split('\n').filter(line => line.trim() !== '');
-    const headers = lines[0].split(',');
-    return lines.slice(1).map(line => {
-        const values = line.split(',');
-        const obj = {};
-        headers.forEach((header, i) => {
-            obj[header.trim()] = values[i] ? values[i].trim() : '';
-        });
-        return obj;
-    });
-}
+// Replace these with your actual Supabase credentials
+const SUPABASE_URL = "https://your-project-url.supabase.co"; 
+const SUPABASE_KEY = "your-anon-key";
 
-// Check Session on Protected Pages
+const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+// Check Session
 function checkSession() {
     const user = sessionStorage.getItem("user");
     const isLoginPage = window.location.pathname.includes("login.html");
@@ -28,13 +20,13 @@ function checkSession() {
     
     if (user && isLoginPage) {
         window.location.href = "dashboard.html";
-        return user;
+        return JSON.parse(user);
     }
 
     return user ? JSON.parse(user) : null;
 }
 
-// Login Function
+// Login Function using Supabase
 async function login() {
     const emailInput = document.getElementById("email");
     const errorDiv = document.getElementById("error");
@@ -50,35 +42,32 @@ async function login() {
         btn.innerText = "Authenticating...";
         btn.disabled = true;
 
-        const response = await fetch("data/users.csv");
-        if (!response.ok) throw new Error("Could not find users database");
-        
-        const text = await response.text();
-        const users = parseCSV(text);
-        
-        const user = users.find(u => u.email.toLowerCase() === email);
+        const { data, error } = await supabase
+            .from('users')
+            .select('*')
+            .eq('email', email)
+            .single();
 
-        if (user) {
-            sessionStorage.setItem("user", JSON.stringify(user));
-            window.location.href = "dashboard.html";
-        } else {
+        if (error || !data) {
             errorDiv.innerText = "Access Denied: Email not registered";
             btn.innerText = "Login";
             btn.disabled = false;
+        } else {
+            sessionStorage.setItem("user", JSON.stringify(data));
+            window.location.href = "dashboard.html";
         }
-    } catch (error) {
-        console.error("Login Error:", error);
-        errorDiv.innerText = "Server Error: Unable to access data";
+    } catch (err) {
+        console.error("Login Error:", err);
+        errorDiv.innerText = "Database Error: Connection failed";
         btn.innerText = "Login";
         btn.disabled = false;
     }
 }
 
-// Logout Function
 function logout() {
     sessionStorage.removeItem("user");
     window.location.href = "login.html";
 }
 
-// Initialize session check
 const currentUser = checkSession();
+
