@@ -1,4 +1,0 @@
-payment_id,project_id,type,person,amount,status
-PM001,P001,Client Payment,Informatica,150000,Received
-PM002,P001,Freelancer Payment,Arjun,25000,Pending
-PM003,P001,Freelancer Payment,Rahul,40000,Paid
