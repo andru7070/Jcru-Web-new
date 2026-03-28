@@ -168,50 +168,53 @@
         <!-- /Header -->
 
         <!-- Hero 3D Section -->
-        <section class="hero-3d-wrapper" style="position: relative; width: 100%; height: 80vh; background: radial-gradient(circle at center, #1a1a24 0%, #050505 100%); display: flex; align-items: center; justify-content: center; overflow: hidden; margin-top: 80px; border-bottom: 1px solid rgba(255,255,255,0.05);">
-            <div class="glass-overlay" style="position: absolute; top: 10%; left: 5%; padding: 20px 40px; background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(10px); border-radius: 16px; border: 1px solid rgba(255,255,255,0.1); z-index: 2; pointer-events: none;">
-                <h1 style="color: #fff; font-size: 3.5rem; margin-bottom: 10px; font-weight: 700; letter-spacing: -1px;">3D Innovation</h1>
-                <p style="color: rgba(255,255,255,0.6); font-size: 1.1rem; max-width: 300px;">Experience our interactive 3D models moving in real-time. The object below follows your cursor.</p>
+        <section class="hero-3d-wrapper"
+            style="position: relative; width: 100%; height: 80vh; background: radial-gradient(circle at center, #1a1a24 0%, #050505 100%); display: flex; align-items: center; justify-content: center; overflow: hidden; margin-top: 80px; border-bottom: 1px solid rgba(255,255,255,0.05);">
+            <div class="glass-overlay"
+                style="position: absolute; top: 10%; left: 5%; padding: 20px 40px; background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(10px); border-radius: 16px; border: 1px solid rgba(255,255,255,0.1); z-index: 2; pointer-events: none;">
+                <h1
+                    style="color: #fff; font-size: 3.5rem; margin-bottom: 10px; font-weight: 700; letter-spacing: -1px;">
+                    3D Innovation</h1>
+                <p style="color: rgba(255,255,255,0.6); font-size: 1.1rem; max-width: 300px;">Experience our interactive
+                    3D models moving in real-time. The object below follows your cursor.</p>
             </div>
 
             <!-- 3D Model Viewer Component -->
-            <model-viewer 
-                id="hero-3d-model" 
-                src="assets/3D/nopo.glb" 
-                alt="3D Interactive Object" 
-                environment-image="neutral"
-                shadow-intensity="1.5"
-                shadow-softness="1"
-                exposure="1"
-                disable-zoom 
-                disable-pan 
-                style="width: 100%; height: 100%; z-index: 1;">
+            <model-viewer id="hero-3d-model" src="assets/3D/nopo.glb" alt="3D Interactive Object"
+                environment-image="neutral" shadow-intensity="1.5" shadow-softness="1" exposure="1" disable-zoom
+                disable-pan style="width: 100%; height: 100%; z-index: 1;">
             </model-viewer>
 
-            <div style="position: absolute; bottom: 5%; right: 5%; display: flex; align-items: center; gap: 10px; pointer-events: none; z-index: 2;">
-                <div style="width: 8px; height: 8px; background: #00ff88; border-radius: 50%; box-shadow: 0 0 10px #00ff88; animation: pulse 2s infinite;"></div>
-                <span style="color: rgba(255,255,255,0.7); font-size: 0.9rem; letter-spacing: 1px; text-transform: uppercase;">Interactive Mode Active</span>
+            <div
+                style="position: absolute; bottom: 5%; right: 5%; display: flex; align-items: center; gap: 10px; pointer-events: none; z-index: 2;">
+                <div
+                    style="width: 8px; height: 8px; background: #00ff88; border-radius: 50%; box-shadow: 0 0 10px #00ff88; animation: pulse 2s infinite;">
+                </div>
+                <span
+                    style="color: rgba(255,255,255,0.7); font-size: 0.9rem; letter-spacing: 1px; text-transform: uppercase;">Interactive
+                    Mode Active</span>
             </div>
         </section>
 
         <!-- Import Model Viewer -->
-        <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.4.0/model-viewer.min.js"></script>
+        <script type="module"
+            src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.4.0/model-viewer.min.js"></script>
 
         <!-- Script for Cursor Tracking -->
         <script>
             document.addEventListener('DOMContentLoaded', () => {
                 const modelViewer = document.getElementById('hero-3d-model');
-                
+
                 // Add smooth interpolation using CSS variables internally handled by model-viewer
                 // camera-orbit is usually format: theta phi radius
                 window.addEventListener('mousemove', (e) => {
                     const x = (e.clientX / window.innerWidth) * 2 - 1;
                     const y = (e.clientY / window.innerHeight) * 2 - 1;
-                    
+
                     // Constrain the rotation amounts (e.g., 45 degrees left/right, 30 degrees up/down)
                     const theta = -x * 45; // Left/Right orbit
                     const phi = 90 - (y * 30); // Up/Down orbit (90 is equator)
-                    
+
                     // Update camera to give illusion of object turning to look at mouse
                     modelViewer.cameraOrbit = `${theta}deg ${phi}deg auto`;
                 });
@@ -219,10 +222,22 @@
         </script>
         <style>
             @keyframes pulse {
-                0% { transform: scale(1); opacity: 1; }
-                50% { transform: scale(1.5); opacity: 0.5; }
-                100% { transform: scale(1); opacity: 1; }
+                0% {
+                    transform: scale(1);
+                    opacity: 1;
+                }
+
+                50% {
+                    transform: scale(1.5);
+                    opacity: 0.5;
+                }
+
+                100% {
+                    transform: scale(1);
+                    opacity: 1;
+                }
             }
+
             #hero-3d-model {
                 transition: transform 0.1s ease-out;
             }
@@ -269,7 +284,7 @@
                                     <h5 class="mb-3" style="line-height: 1;">We Honour<br>Non Disclosure Agreements
                                     </h5>
 
-                                    <a href="#contactScroll" class="tf-btn style-2">Contact Us to Watch</a>
+                                    <a href="#contactScroll" class="tf-btn style-2">Contact Us To Watch</a>
                                 </div>
                             </div>
                         </div>
