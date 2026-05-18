@@ -170,19 +170,12 @@
         <!-- Hero 3D Section -->
         <section class="hero-3d-wrapper"
             style="position: relative; width: 100%; height: 80vh; background: radial-gradient(circle at center, #1a1a24 0%, #050505 100%); display: flex; align-items: center; justify-content: center; overflow: hidden; margin-top: 80px; border-bottom: 1px solid rgba(255,255,255,0.05);">
-            <div class="glass-overlay"
-                style="position: absolute; top: 10%; left: 5%; padding: 20px 40px; background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(10px); border-radius: 16px; border: 1px solid rgba(255,255,255,0.1); z-index: 2; pointer-events: none;">
-                <h1
-                    style="color: #fff; font-size: 3.5rem; margin-bottom: 10px; font-weight: 700; letter-spacing: -1px;">
-                    3D Innovation</h1>
-                <p style="color: rgba(255,255,255,0.6); font-size: 1.1rem; max-width: 300px;">Experience our interactive
-                    3D models moving in real-time. The object below follows your cursor.</p>
-            </div>
 
             <!-- 3D Model Viewer Component -->
             <model-viewer id="hero-3d-model" src="assets/3D/Web_scene_1.glb" alt="3D Interactive Object"
                 environment-image="neutral" shadow-intensity="1.5" shadow-softness="1" exposure="1" disable-zoom
-                disable-pan autoplay style="width: 100%; height: 100%; z-index: 1;">
+                disable-pan autoplay min-field-of-view="1deg" field-of-view="5deg" camera-target="auto auto auto"
+                style="width: 100%; height: 100%; z-index: 1;">
             </model-viewer>
 
             <div
@@ -205,18 +198,33 @@
             document.addEventListener('DOMContentLoaded', () => {
                 const modelViewer = document.getElementById('hero-3d-model');
 
+                // We will calculate a much closer radius once the model loads
+                let zoomRadius = 'auto';
+
+                modelViewer.addEventListener('load', () => {
+                    // Get the auto-calculated ideal distance
+                    const orbit = modelViewer.getCameraOrbit();
+                    // Divide the radius to zoom in a bit more than before
+                    zoomRadius = (orbit.radius * 0.08) + 'm';
+
+                    // Force minimum limit just in case it restricts us
+                    modelViewer.minCameraOrbit = `auto auto 0m`;
+
+                    // Set the initial zoomed-in orbit (lowered camera, rotated 270 degrees)
+                    modelViewer.cameraOrbit = `315deg 67.5deg ${zoomRadius}`;
+                });
+
                 // Add smooth interpolation using CSS variables internally handled by model-viewer
-                // camera-orbit is usually format: theta phi radius
                 window.addEventListener('mousemove', (e) => {
                     const x = (e.clientX / window.innerWidth) * 2 - 1;
                     const y = (e.clientY / window.innerHeight) * 2 - 1;
 
-                    // Constrain the rotation amounts (e.g., 45 degrees left/right, 30 degrees up/down)
-                    const theta = -x * 45; // Left/Right orbit
-                    const phi = 90 - (y * 30); // Up/Down orbit (90 is equator)
+                    // Base angle is 315deg horizontal and 67.5deg vertical (lowered)
+                    const theta = 315 + (-x * 5); // Subtle Left/Right orbit
+                    const phi = 67.5 - (y * 3); // Subtle Up/Down orbit
 
-                    // Update camera to give illusion of object turning to look at mouse
-                    modelViewer.cameraOrbit = `${theta}deg ${phi}deg auto`;
+                    // Update camera to give illusion of object turning to look at mouse, using our forced zoom radius
+                    modelViewer.cameraOrbit = `${theta}deg ${phi}deg ${zoomRadius}`;
                 });
             });
         </script>
