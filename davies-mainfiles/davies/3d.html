@@ -176,11 +176,19 @@
                 environment-image="neutral" shadow-intensity="1.5" shadow-softness="1" exposure="1" disable-zoom
                 disable-pan autoplay min-field-of-view="1deg" field-of-view="5deg" camera-target="auto auto auto"
                 style="width: 100%; height: 100%; z-index: 1;">
-                
+
                 <!-- Custom Loader -->
-                <div slot="progress-bar" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); display: flex; flex-direction: column; align-items: center; gap: 15px; z-index: 10;">
-                    <div class="custom-spinner" style="width: 50px; height: 50px; border: 4px solid rgba(255, 255, 255, 0.1); border-left-color: #00ff88; border-radius: 50%; animation: spin 1s linear infinite;"></div>
-                    <span style="color: #fff; font-size: 1rem; letter-spacing: 2px; text-transform: uppercase;">Loading 3D Scene...</span>
+                <div id="custom-loader" slot="progress-bar"
+                    style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(circle at center, #1a1a24 0%, #050505 100%); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 20px; z-index: 10; transition: opacity 0.5s ease-out;">
+                    <div
+                        style="width: 250px; height: 2px; background: rgba(255, 255, 255, 0.1); border-radius: 2px; overflow: hidden;">
+                        <div id="loader-bar"
+                            style="width: 0%; height: 100%; background: #00ff88; transition: width 0.1s ease-out;">
+                        </div>
+                    </div>
+                    <span id="loader-text"
+                        style="color: #fff; font-size: 0.9rem; letter-spacing: 3px; text-transform: uppercase; font-variant-numeric: tabular-nums;">Loading
+                        3D Scene... 0%</span>
                 </div>
             </model-viewer>
 
@@ -207,7 +215,23 @@
                 // We will calculate a much closer radius once the model loads
                 let zoomRadius = 'auto';
 
+                // Update progress bar
+                modelViewer.addEventListener('progress', (e) => {
+                    const progress = Math.round(e.detail.totalProgress * 100);
+                    const loaderBar = document.getElementById('loader-bar');
+                    const loaderText = document.getElementById('loader-text');
+                    if (loaderBar) loaderBar.style.width = progress + '%';
+                    if (loaderText) loaderText.textContent = `Loading 3D Scene... ${progress}%`;
+                });
+
                 modelViewer.addEventListener('load', () => {
+                    // Force the loader to hide once it is fully parsed and rendered
+                    const loader = document.getElementById('custom-loader');
+                    if (loader) {
+                        loader.style.opacity = '0';
+                        setTimeout(() => loader.style.pointerEvents = 'none', 500);
+                    }
+
                     // Get the auto-calculated ideal distance
                     const orbit = modelViewer.getCameraOrbit();
                     // Divide the radius to zoom in a bit more than before
@@ -256,6 +280,17 @@
                 to {
                     transform: rotate(360deg);
                 }
+            }
+
+            /* model-viewer automatically adds a 'hide' class when loading is done */
+            #hero-3d-model>[slot="progress-bar"] {
+                transition: opacity 0.5s ease-out;
+            }
+
+            #hero-3d-model>[slot="progress-bar"].hide {
+                opacity: 0;
+                pointer-events: none;
+                visibility: hidden;
             }
 
             #hero-3d-model {
