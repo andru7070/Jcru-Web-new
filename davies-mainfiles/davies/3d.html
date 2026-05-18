@@ -234,8 +234,8 @@
 
                     // Get the auto-calculated ideal distance
                     const orbit = modelViewer.getCameraOrbit();
-                    // Divide the radius to zoom in a bit more than before
-                    zoomRadius = (orbit.radius * 0.08) + 'm';
+                    // Divide the radius to zoom in another 50% keeping the person centered
+                    zoomRadius = (orbit.radius * 0.04) + 'm';
 
                     // Force minimum limit just in case it restricts us
                     modelViewer.minCameraOrbit = `auto auto 0m`;
