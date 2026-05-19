@@ -234,14 +234,14 @@
 
                     // Get the auto-calculated ideal distance
                     const orbit = modelViewer.getCameraOrbit();
-                    // Divide the radius to zoom in another 50% keeping the person centered
-                    zoomRadius = (orbit.radius * 0.04) + 'm';
+                    // Divide the radius to zoom out a bit (from 0.04 to 0.06)
+                    zoomRadius = (orbit.radius * 0.06) + 'm';
 
                     // Force minimum limit just in case it restricts us
                     modelViewer.minCameraOrbit = `auto auto 0m`;
 
-                    // Set the initial zoomed-in orbit (lowered camera, rotated 270 degrees)
-                    modelViewer.cameraOrbit = `315deg 67.5deg ${zoomRadius}`;
+                    // Set the initial orbit (pan down by changing vertical angle to 75deg)
+                    modelViewer.cameraOrbit = `315deg 75deg ${zoomRadius}`;
                 });
 
                 // Add smooth interpolation using CSS variables internally handled by model-viewer
@@ -249,9 +249,9 @@
                     const x = (e.clientX / window.innerWidth) * 2 - 1;
                     const y = (e.clientY / window.innerHeight) * 2 - 1;
 
-                    // Base angle is 315deg horizontal and 67.5deg vertical (lowered)
+                    // Base angle is 315deg horizontal and 75deg vertical (panned down)
                     const theta = 315 + (-x * 5); // Subtle Left/Right orbit
-                    const phi = 67.5 - (y * 3); // Subtle Up/Down orbit
+                    const phi = 75 - (y * 3); // Subtle Up/Down orbit
 
                     // Update camera to give illusion of object turning to look at mouse, using our forced zoom radius
                     modelViewer.cameraOrbit = `${theta}deg ${phi}deg ${zoomRadius}`;
